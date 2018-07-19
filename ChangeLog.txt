@@ -1,0 +1,4 @@
+1.1.0
+
+- Initial release (port from Wiz to Dingoo/Dingux)
+- Dingoo A-380 and A-320e support
