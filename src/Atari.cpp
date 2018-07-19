@@ -31,6 +31,7 @@
 #include "psp_joy.h"
 #include "psp_menu.h"
 #include "psp_fmgr.h"
+#include "unzip.h"
 
 # ifdef __cplusplus
 extern "C" {

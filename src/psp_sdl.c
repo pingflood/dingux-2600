@@ -35,6 +35,7 @@
 
   SDL_Surface *back_surface;
   SDL_Surface *back2_surface;
+  SDL_Surface *ScreenSurface;
 
   SDL_Surface *background_surface = NULL;
   SDL_Surface *blit_surface;
@@ -125,9 +126,14 @@ void
 psp_sdl_black_screen()
 {
   SDL_FillRect(back_surface,NULL,SDL_MapRGB(back_surface->format,0x0,0x0,0x0));
-  SDL_Flip(back_surface);
+  //SDL_Flip(back_surface);
   SDL_FillRect(back_surface,NULL,SDL_MapRGB(back_surface->format,0x0,0x0,0x0));
-  SDL_Flip(back_surface);
+  //SDL_Flip(back_surface);
+  
+  SDL_FillRect(ScreenSurface,NULL,SDL_MapRGB(ScreenSurface->format,0x0,0x0,0x0));
+  SDL_Flip(ScreenSurface);
+  SDL_FillRect(ScreenSurface,NULL,SDL_MapRGB(ScreenSurface->format,0x0,0x0,0x0));
+  SDL_Flip(ScreenSurface);
 }
 
 void
@@ -433,7 +439,20 @@ psp_sdl_unlock(void)
 void
 psp_sdl_flip(void)
 {
-  SDL_Flip(back_surface);
+  //SDL_Flip(back_surface);
+
+  if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
+  int x, y;
+  uint32_t *s = (uint32_t*)back_surface->pixels;
+  uint32_t *d = (uint32_t*)ScreenSurface->pixels;
+  for(y=0; y<240; y++){
+    for(x=0; x<160; x++){
+      *d++ = *s++;
+    }
+    d+= 160;
+  }
+  if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);
+  SDL_Flip(ScreenSurface);
 }
 
 #define  systemRedShift      (back_surface->format->Rshift)
@@ -562,9 +581,9 @@ psp_sdl_load_png(SDL_Surface* my_surface, char* filename)
     PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_PACKING |
     PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_BGR , NULL);
 
-  png_uint_32 width = info_ptr->width;
-  png_uint_32 height = info_ptr->height;
-  int color_type = info_ptr->color_type;
+  png_uint_32 width = png_get_image_width( png_ptr,  info_ptr); //info_ptr->width;
+  png_uint_32 height = png_get_image_height( png_ptr,  info_ptr); //info_ptr->height;
+  int color_type = png_get_color_type(png_ptr,  info_ptr); //info_ptr->color_type;
 
   if ((width  > w) ||
       (height > h)) {
@@ -573,7 +592,8 @@ psp_sdl_load_png(SDL_Surface* my_surface, char* filename)
     return 0;
   }
 
-  png_byte **pRowTable = info_ptr->row_pointers;
+  //png_byte **pRowTable = png_get_rowbytes(png_ptr, info_ptr); //info_ptr->row_pointers;
+  png_byte **pRowTable = png_get_rows(png_ptr, info_ptr); //info_ptr->row_pointers;
   unsigned int x, y;
   u8 r, g, b;
 
@@ -677,8 +697,8 @@ psp_sdl_init(void)
 
   psp_sdl_select_font_6x10();
 
-  back_surface=SDL_SetVideoMode(PSP_SDL_SCREEN_WIDTH,PSP_SDL_SCREEN_HEIGHT, 16 , 
-                                SDL_SWSURFACE);
+  ScreenSurface = SDL_SetVideoMode(320, 480, 16, SDL_HWSURFACE);
+  back_surface = SDL_CreateRGBSurface(SDL_SWSURFACE, PSP_SDL_SCREEN_WIDTH, PSP_SDL_SCREEN_HEIGHT, 16, 0, 0, 0, 0);
 
   if ( !back_surface) {
     return 0;

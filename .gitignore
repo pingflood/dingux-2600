@@ -1,2 +1,5 @@
 /src/*.o
+/src/emucore/*.o
+/src/common/*.o
+/src/psp/*.o
 /src/dist/dingux-2600

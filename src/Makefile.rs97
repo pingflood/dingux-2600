@@ -105,7 +105,7 @@ DEFAULT_CFLAGS = $(shell $(SDL_CONFIG) --cflags)
 MORE_CFLAGS = -DNARROW -DSOUND -DBPP16 -DSDL -DLSB_FIRST \
 -I. -I$(SYSROOT)/usr/include  -I$(SYSROOT)/usr/lib  -I$(SYSROOT)/lib \
 -DMPU_JZ4740 -mips32 \
--Iemucore -Icommon -Ipsp -DPSP -DBSPF_PSP -DSOUND_SUPPORT \
+-I./emucore -I./common -Ipsp -DPSP -DBSPF_PSP -DSOUND_SUPPORT \
 -O3 -fsigned-char -ffast-math -fomit-frame-pointer -fno-strength-reduce \
 -DDINGUX_MODE  \
 -DATARI_VERSION=\"$(ATARI_VERSION)\" \
