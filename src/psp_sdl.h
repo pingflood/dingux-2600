@@ -25,14 +25,14 @@ extern "C" {
 # define PSP_SDL_NOP   0
 # define PSP_SDL_XOR   1
 
-# define PSP_LINE_SIZE  400
+# define PSP_LINE_SIZE  320
 
-# define PSP_SDL_SCREEN_WIDTH    400
+# define PSP_SDL_SCREEN_WIDTH    320
 # define PSP_SDL_SCREEN_HEIGHT   240
 
-  typedef unsigned char   UCHAR;
-  typedef unsigned int    UINT;
-  typedef unsigned short  USHORT;
+  typedef unsigned char   uchar;
+  typedef unsigned int    uint;
+  typedef unsigned short  ushort;
 
   extern SDL_Surface* back_surface;
   extern SDL_Surface* blit_surface;
@@ -50,7 +50,7 @@ extern "C" {
   extern void psp_sdl_clear_screen(int color);
   extern void psp_sdl_fill_rectangle(int x, int y, int w, int h, int color, int mode);
   extern void psp_sdl_draw_rectangle(int x, int y, int w, int h, int border, int mode);
-  extern void psp_sdl_put_char(int x, int y, int color, int bgcolor, UCHAR c, int drawfg, int drawbg);
+  extern void psp_sdl_put_char(int x, int y, int color, int bgcolor, uchar c, int drawfg, int drawbg);
   extern void psp_sdl_fill_print(int x,int y,const char *str, int color, int bgcolor);
   extern void psp_sdl_flip(void);
 
@@ -63,7 +63,7 @@ extern "C" {
   extern void psp_sdl_exit(int status);
   extern void psp_sdl_select_font_6x10();
   extern void psp_sdl_select_font_8x8();
-  extern uint psp_sdl_rgb(UCHAR R, UCHAR G, UCHAR B);
+  extern uint psp_sdl_rgb(uchar R, uchar G, uchar B);
   extern void psp_sdl_save_screenshot(void);
   extern ushort * psp_sdl_get_vram_addr(uint x, uint y);
   extern int psp_sdl_load_thumb_png(SDL_Surface* my_surface, char* filename);

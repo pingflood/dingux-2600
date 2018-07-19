@@ -60,7 +60,16 @@ class Settings
 
       @return False on any errors, otherwise true
     */
-    bool loadCommandLine(int argc, char** argv);
+    // bool loadCommandLine(int argc, char** argv);
+
+/* dc 20130702 */
+    /**
+      This method should be called to load the arguments from the commandline.
+
+      @return Name of the ROM to load, otherwise empty string
+    */
+    string loadCommandLine(int argc, char** argv);
+
 
     /**
       This method should be called *after* settings have been read,

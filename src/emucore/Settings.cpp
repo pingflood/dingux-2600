@@ -136,6 +136,9 @@ void Settings::loadConfig()
   in.close();
 }
 
+
+#if 0 
+/* dc 20130702 */
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 bool Settings::loadCommandLine(int argc, char** argv)
 {
@@ -198,6 +201,59 @@ bool Settings::loadCommandLine(int argc, char** argv)
 
   return true;
 }
+
+#endif
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+string Settings::loadCommandLine(int argc, char** argv)
+{
+  for(int i = 1; i < argc; ++i)
+  {
+    // strip off the '-' character
+    string key = argv[i];
+    if(key[0] == '-')
+    {
+      key = key.substr(1, key.length());
+
+      // Take care of the arguments which are meant to be executed immediately
+      // (and then Stella should exit)
+      if(key == "help" || key == "listrominfo")
+      {
+        usage();
+        setExternal(key, "true");
+        return "";
+      }
+
+      // Take care of arguments without an option
+      if(key == "rominfo" || key == "debug" || key == "holdreset" ||
+         key == "holdselect" || key == "holdbutton0")
+      {
+        setExternal(key, "true");
+        continue;
+      }
+
+      if(++i >= argc)
+      {
+        cerr << "Missing argument for '" << key << "'" << endl;
+        return "";
+      }
+      string value = argv[i];
+
+      // Settings read from the commandline must not be saved to 
+      // the rc-file, unless they were previously set
+      if(int idx = getInternalPos(key) != -1)
+        setInternal(key, value, idx);   // don't set initialValue here
+      else
+        setExternal(key, value);
+    }
+    else
+      return key;
+  }
+
+  return "";
+}
+
+
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void Settings::validate()

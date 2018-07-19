@@ -16,7 +16,7 @@
 // $Id: FrameBufferSoft.cxx,v 1.52 2006/03/25 00:34:17 stephena Exp $
 //============================================================================
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <sstream>
 
 #include "Atari.h"
@@ -28,7 +28,7 @@
 #include "MediaSrc.hxx"
 #include "Settings.hxx"
 #include "OSystem.hxx"
-# if 0 //LUDO:
+#if 0 //LUDO:
 #include "Font.hxx"
 # endif
 #include "GuiUtils.hxx"
@@ -104,7 +104,7 @@ bool FrameBufferSoft::createScreen()
   }
 # else
   extern SDL_Surface *back_surface;
-  mySDLFlags = SDL_HWSURFACE;
+  mySDLFlags = SDL_HWSURFACE | SDL_DOUBLEBUF;
   myScreenDim.w = myDesktopDim.w;
   myScreenDim.h = myDesktopDim.w;
   myScreen = back_surface;
@@ -597,7 +597,7 @@ void FrameBufferSoft::fillRect(uInt32 x, uInt32 y, uInt32 w, uInt32 h,
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# if 0 //LUDO:
+#if 0 //LUDO:
 void FrameBufferSoft::drawChar(const GUI::Font* FONT, uInt8 chr,
                                uInt32 xorig, uInt32 yorig, int color)
 {

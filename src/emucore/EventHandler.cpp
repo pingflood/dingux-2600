@@ -18,7 +18,7 @@
 
 #include <sstream>
 #include <string.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include "Event.hxx"
 #include "EventHandler.hxx"

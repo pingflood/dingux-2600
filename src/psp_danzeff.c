@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <string.h>
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "global.h"
 #include "psp_danzeff.h"
-#include "SDL/SDL_image.h"
+#include "SDL_image.h"
 
 #define false 0
 #define true 1

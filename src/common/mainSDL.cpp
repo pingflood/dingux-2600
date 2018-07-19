@@ -18,7 +18,7 @@
 
 #include <sstream>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "psp_sdl.h"
 
 #include "bspf.hxx"
@@ -76,6 +76,11 @@ static void Cleanup();
 OSystem* theOSystem = (OSystem*) NULL;
 
 extern "C" {
+
+/* dc 20130702 */
+void
+atari_update_save_name(char *Name);
+
 
 int
 main_atari_get_cheat_size()
@@ -285,12 +290,24 @@ atariMain(int argc, char* argv[])
   //   the ROM actually exists, use it to create a new console.
   // If not, use the built-in ROM launcher.  In this case, we enter 'launcher'
   //   mode and let the main event loop take care of opening a new console/ROM.
-# if 0 //LUDO:
-  string romfile = argv[argc - 1];
-  if(argc == 1 || !FilesystemNode::fileExists(romfile))
-    theOSystem->createLauncher();
+#if 1 //LUDO:  /* dc 20130702 */
+//  string romfile = argv[argc - 1];
+  string romfile = theOSystem->settings().loadCommandLine(argc, argv);
+  // if(argc == 1 || !FilesystemNode::fileExists(romfile))
+ if (argc == 1 || romfile == "" || !FilesystemNode::fileExists(romfile))
+{
+  cout << "argc = 1, romfile: " << romfile;
+    theOSystem->createConsole("./default.bin");  /* dc 20130702 */
+    // theOSystem->createLauncher();
+}
   else if(theOSystem->createConsole(romfile))
   {
+
+  /* dc 20130702 */
+  atari_update_save_name(&romfile[0]);
+  
+  cout << "create console romfile: " << romfile;
+
     if(theOSystem->settings().getBool("holdreset"))
       theOSystem->eventHandler().handleEvent(Event::ConsoleReset, 1);
 
@@ -327,7 +344,7 @@ atariMain(int argc, char* argv[])
   theOSystem->createConsole("./default.bin");
 # endif
 
-# if 0 //LUDO:
+#if 0 //LUDO:
   // Swallow any spurious events in the queue
   // These are normally caused by joystick/mouse jitter
   SDL_Event event;

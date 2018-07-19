@@ -67,37 +67,37 @@ extern SDL_Surface *back_surface;
 
   static menu_item_t menu_list[] =
   {
-    { "Scan Old   :"},
-    { "Scan New   :"},
-    { "Poke Value :"},
-    { "Add Cheat  :"},
-    { "Save RAM"    },
+    { "Scan Old" },
+    { "Scan New" },
+    { "Poke Value" },
+    { "Add Cheat" },
+    { "Save RAM" },
 
-    { "Enable : "},
-    { "All    : "},
-    { "Value  : "},
-    { "Import : "},
-    { "Edit   : "},
+    { "Enable" },
+    { "All" },
+    { "Value" },
+    { "Import" },
+    { "Edit" },
 
-    { "Delete : "},
+    { "Delete" },
 
     { "Load cheat" },
     { "Save cheat" },
     { "Reset cheat" },
 
-    { "Back to Menu"         }
+    { "Back to Menu" }
   };
 
 # define MAX_SCAN_ADDR    10
 
-  static int cur_menu_id    = MENU_CHEAT_LOAD;
+  static int cur_menu_id    = MENU_CHEAT_BACK;
   static int cur_cheat      = 0;
 
-  static UCHAR  scan_old_value  = 3;
-  static UCHAR  scan_new_value  = 3;
-  static UCHAR  scan_poke_value = 3;
+  static uchar  scan_old_value  = 3;
+  static uchar  scan_new_value  = 3;
+  static uchar  scan_poke_value = 3;
 
-  static UCHAR *scan_prev_ram   = 0;
+  static uchar *scan_prev_ram   = 0;
   static int    scan_addr[MAX_SCAN_ADDR];
   static int    scan_addr_found = 0;
 
@@ -118,29 +118,29 @@ psp_display_screen_cheat_menu(void)
 
   psp_sdl_blit_help();
 
-  x      = 50;
-  y      = 15;
+  x      = 10;
+  y      = 5; /* dc 20130702 */
   y_step = 10;
   
   for (menu_id = 0; menu_id < MAX_MENU_CHEAT_ITEM; menu_id++) {
     color = PSP_MENU_TEXT_COLOR;
-    if (menu_id == MENU_CHEAT_DEL) color = PSP_MENU_NOTE_COLOR;
+    // if (menu_id == MENU_CHEAT_DEL) color = PSP_MENU_NOTE_COLOR;
     if (cur_menu_id == menu_id) color = PSP_MENU_SEL_COLOR;
 
     psp_sdl_back2_print(x, y, menu_list[menu_id].title, color);
 
     if (menu_id == MENU_CHEAT_OLD_VAL) {
-      sprintf(buffer,"%02X", scan_old_value);
+      sprintf(buffer,": %02X", scan_old_value);
       string_fill_with_space(buffer, 4);
       psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_CHEAT_NEW_VAL) {
-      sprintf(buffer,"%02X", scan_new_value);
+      sprintf(buffer,": %02X", scan_new_value);
       string_fill_with_space(buffer, 4);
       psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_CHEAT_POKE) {
-      sprintf(buffer,"%02X", scan_poke_value);
+      sprintf(buffer,": %02X", scan_poke_value);
       string_fill_with_space(buffer, 4);
       psp_sdl_back2_print(130, y, buffer, color);
     } else
@@ -153,14 +153,14 @@ psp_display_screen_cheat_menu(void)
         for (addr_id = 0; addr_id < scan_addr_found; addr_id++) {
           if (addr_id >= MAX_SCAN_ADDR) break;
           if (first) {
-            sprintf(scan, "%04X", scan_addr[addr_id]);
+            sprintf(scan, ": %04X", scan_addr[addr_id]);
             first = 0;
             scan += 4;
           } else {
             sprintf(scan, ",%04X", scan_addr[addr_id]);
             scan += 5;
             if (addr_id == 4) {
-              string_fill_with_space(buffer, 38);
+              // string_fill_with_space(buffer, 38);
               psp_sdl_back2_print(130, y, buffer, color);
               scan = buffer;
               buffer[0] = 0;
@@ -169,10 +169,10 @@ psp_display_screen_cheat_menu(void)
             }
           }
         }
-        if (scan_addr_found >= MAX_SCAN_ADDR) {
-          sprintf(scan," ... (%d)", scan_addr_found );
-        }
-        string_fill_with_space(buffer, 38);
+        // if (scan_addr_found >= MAX_SCAN_ADDR) {
+          // sprintf(scan," ... (%d)", scan_addr_found );
+        // }
+        // string_fill_with_space(buffer, 38);
         psp_sdl_back2_print(130, y, buffer, color);
         y = sav_y;
 
@@ -199,7 +199,7 @@ psp_display_screen_cheat_menu(void)
   }
 
   y_step = 10;
-  y      = 65;
+  y      = 60;
 
   for (cheat_id = 0; cheat_id < ATARI_MAX_CHEAT; cheat_id++) {
     if (cheat_id == cur_cheat) color = PSP_MENU_SEL2_COLOR;
@@ -211,15 +211,17 @@ psp_display_screen_cheat_menu(void)
       char enable = (a_cheat->type == ATARI_CHEAT_ENABLE) ? 'X' : ' ';
       sprintf(buffer, "[%c] %04X-%02X %s", enable, a_cheat->addr, a_cheat->value, a_cheat->comment);
     } else {
-      sprintf(buffer, "[ ]     -   Empty");
+      // sprintf(buffer, "[ ] Empty");
+      sprintf(buffer, "");
     }
-    string_fill_with_space(buffer, 36);
+    // string_fill_with_space(buffer, 36);
     psp_sdl_back2_print(130, y, buffer, color);
 
     y += y_step;
   }
 
-  psp_menu_display_save_name();
+  /* dc 20130702 */
+  // psp_menu_display_save_name();
 }
 
 
@@ -232,7 +234,7 @@ psp_cheat_menu_load(int format)
   if (ret ==  1) /* load OK */
   {
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "File loaded !", 
+    psp_sdl_back2_print(150, 180, "File loaded!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -241,7 +243,7 @@ psp_cheat_menu_load(int format)
   if (ret == -1) /* Load Error */
   {
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "Can't load file !", 
+    psp_sdl_back2_print(150, 180, "Can't load file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -258,7 +260,7 @@ psp_cheat_menu_save()
   if (! error) /* save OK */
   {
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "File saved !", 
+    psp_sdl_back2_print(150, 180, "File saved!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -266,7 +268,7 @@ psp_cheat_menu_save()
   else 
   {
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "Can't save file !", 
+    psp_sdl_back2_print(150, 180, "Can't save file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -281,7 +283,7 @@ psp_cheat_menu_del_cheat()
   if (a_cheat->type == ATARI_CHEAT_NONE) {
 
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "Cheat is empty !", 
+    psp_sdl_back2_print(150, 180, "Cheat is empty!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -299,7 +301,7 @@ psp_cheat_menu_add_cheat()
 
   if (! scan_addr_found) {
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "No address to add !", 
+    psp_sdl_back2_print(150, 180, "No address to add!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -343,7 +345,7 @@ static void
 psp_cheat_menu_reset_cheat()
 {
   psp_display_screen_cheat_menu();
-  psp_sdl_back2_print(190, 180, "Reset cheat !", PSP_MENU_NOTE_COLOR);
+  psp_sdl_back2_print(150, 180, "Reset cheat!", PSP_MENU_NOTE_COLOR);
   psp_sdl_flip();
   sleep(1);
 
@@ -358,7 +360,7 @@ psp_cheat_menu_enable_cheat()
   if (a_cheat->type == ATARI_CHEAT_NONE) {
 
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "Cheat is empty !", 
+    psp_sdl_back2_print(150, 180, "Cheat is empty!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -389,7 +391,7 @@ psp_cheat_menu_enable_all_cheat()
   if (cur_type == ATARI_CHEAT_NONE) {
 
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "Cheats are empty !", 
+    psp_sdl_back2_print(150, 180, "Cheats are empty!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -406,7 +408,7 @@ psp_cheat_menu_value_cheat(int step)
   if (a_cheat->type == ATARI_CHEAT_NONE) {
 
     psp_display_screen_cheat_menu();
-    psp_sdl_back2_print(190, 180, "Cheat is empty !", 
+    psp_sdl_back2_print(150, 180, "Cheat is empty!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -506,7 +508,7 @@ psp_cheat_menu_init()
 {
   int addr;
   if (scan_prev_ram == 0) {
-    scan_prev_ram = (UCHAR *)malloc( ATARI_RAM_SIZE );
+    scan_prev_ram = (uchar *)malloc( ATARI_RAM_SIZE );
     for (addr = 0; addr < ATARI_RAM_SIZE; addr++) {
       u8 peek_val;
       if (! main_atari_cheat_peek( addr, &peek_val ))  continue;
@@ -531,7 +533,7 @@ psp_cheat_menu_save_ram()
   psp_cheat_update_match();
 
   psp_display_screen_cheat_menu();
-  psp_sdl_back2_print(190, 180, "Ram saved !", 
+  psp_sdl_back2_print(150, 180, "Ram saved!", 
                       PSP_MENU_NOTE_COLOR);
   psp_sdl_flip();
   sleep(1);

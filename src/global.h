@@ -21,8 +21,8 @@ typedef unsigned int   u32;
 
 #include "Atari.h"
 
-# define ATARI_WIDTH  400
-# define ATARI_HEIGHT 240
+# define ATARI_WIDTH  320
+# define ATARI_HEIGHT 300
 # define SNAP_WIDTH   140
 # define SNAP_HEIGHT  100
 

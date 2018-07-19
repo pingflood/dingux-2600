@@ -23,7 +23,7 @@
 
 class OSystem;
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include "Sound.hxx"
 #include "bspf.hxx"

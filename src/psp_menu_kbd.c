@@ -67,31 +67,31 @@
 
   static menu_item_t menu_list[] =
   { 
-   { "Skin     :" },
-   { "Mapping  :" },
+   { "Skin" },
+   { "Mapping" },
 
-   { "Up       :" },
-   { "Down     :" },
-   { "Left     :" },
-   { "Right    :" },
+   { "Up" },
+   { "Down" },
+   { "Left" },
+   { "Right" },
 # if defined(DINGUX_MODE)
-   { "B        :" },
-   { "Y        :" },
-   { "X        :" },
-   { "A        :" },
+   { "B" },
+   { "Y" },
+   { "X" },
+   { "A" },
 # else
-   { "X        :" },
-   { "A        :" },
-   { "Y        :" },
-   { "B        :" },
+   { "X" },
+   { "A" },
+   { "Y" },
+   { "B" },
 # endif
-   { "LTrigger :" },
-   { "RTrigger :" },
-   { "JoyFire  :" },
-   { "JoyUp    :" },
-   { "JoyDown  :" },
-   { "JoyLeft  :" },
-   { "JoyRight :" },
+   { "LTrigger" },
+   { "RTrigger" },
+   { "JoyFire" },
+   { "JoyUp" },
+   { "JoyDown" },
+   { "JoyLeft" },
+   { "JoyRight" },
 
    { "Load Keyboard" },
    { "Save Keyboard" },
@@ -100,7 +100,7 @@
    { "Back to Menu" }
   };
 
-  static int cur_menu_id = MENU_KBD_LOAD;
+  static int cur_menu_id = MENU_KBD_BACK;
 
   static int loc_kbd_mapping[ KBD_ALL_BUTTONS ];
   static int loc_kbd_mapping_L[ KBD_ALL_BUTTONS ];
@@ -149,35 +149,35 @@ psp_display_screen_kbd_menu(void)
 
   psp_sdl_blit_help();
 
-  x      = 50;
+  x      = 10;
   y      =  5;
   y_step = 10;
   
   for (menu_id = 0; menu_id < MAX_MENU_KBD_ITEM; menu_id++) 
   {
     if (cur_menu_id == menu_id) color = PSP_MENU_SEL_COLOR;
-    else 
-    if (menu_id == MENU_KBD_KBD_SELECT) color = PSP_MENU_GREEN_COLOR;
-    else                                color = PSP_MENU_TEXT_COLOR;
+    // else if (menu_id == MENU_KBD_KBD_SELECT) color = PSP_MENU_GREEN_COLOR;
+    else color = PSP_MENU_TEXT_COLOR;
 
     psp_sdl_back2_print(x, y, menu_list[menu_id].title, color);
 
     if (menu_id == MENU_KBD_SKIN) {
-      snprintf(buffer, 30, psp_kbd_skin_dir[psp_kbd_skin]);
+      // snprintf(buffer, 30, psp_kbd_skin_dir[psp_kbd_skin]);
+      sprintf(buffer, ": %s", psp_kbd_skin_dir[psp_kbd_skin]);
       scan = strchr(buffer, '/');
       if (scan) *scan = 0;
-      psp_sdl_back2_print(80, y, buffer, color);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_KBD_KBD_SELECT) {
 
-      if (menu_kbd_selected == -1) sprintf(buffer, "standard");
+      if (menu_kbd_selected == -1) sprintf(buffer, ": standard");
       else
-      if (menu_kbd_selected == KBD_LTRIGGER_MAPPING) sprintf(buffer, "left");
+      if (menu_kbd_selected == KBD_LTRIGGER_MAPPING) sprintf(buffer, ": left");
       else
-      if (menu_kbd_selected == KBD_RTRIGGER_MAPPING) sprintf(buffer, "right");
+      if (menu_kbd_selected == KBD_RTRIGGER_MAPPING) sprintf(buffer, ": right");
 
       string_fill_with_space(buffer, 20);
-      psp_sdl_back2_print(80, y, buffer, color);
+      psp_sdl_back2_print(130, y, buffer, color);
 
     } else
     if ((menu_id >= MENU_KBD_UP       ) && 
@@ -192,30 +192,40 @@ psp_display_screen_kbd_menu(void)
       if (menu_kbd_selected == KBD_RTRIGGER_MAPPING) atari_key = loc_kbd_mapping_R[kbd_id];
 
       if ((atari_key >= 0) && (atari_key < ATARI_MAX_KEY)) {
-        strcpy(buffer, psp_atari_key_to_name[atari_key].name);
+        // strcpy(buffer, psp_atari_key_to_name[atari_key].name);
+        sprintf(buffer, ": %s", psp_atari_key_to_name[atari_key].name);
       } else 
       if (atari_key == KBD_UNASSIGNED) {
-        sprintf(buffer, "UNASSIGNED");
+        sprintf(buffer, ": UNASSIGNED");
       } else
       if (atari_key == KBD_LTRIGGER_MAPPING) {
-        sprintf(buffer, "L MAPPING");
+        sprintf(buffer, ": L MAPPING");
       } else
       if (atari_key == KBD_RTRIGGER_MAPPING) {
-        sprintf(buffer, "R MAPPING");
+        sprintf(buffer, ": R MAPPING");
       } else {
-        sprintf(buffer, "KEY %d", atari_key);
+        sprintf(buffer, ": KEY %d", atari_key);
       }
-      string_fill_with_space(buffer, 12);
-      psp_sdl_back2_print(80, y, buffer, color);
 
-      if (menu_id == MENU_KBD_JOY_RIGHT) {
-        y += y_step;
-      }
+
+      // sprintf(buffer, ": %s", buffer);
+
+      // snprintf(buffer, "- %s", buffer);
+      // strncat(buffer, buffer);
+      // string_fill_with_space(buffer, 12);
+      psp_sdl_back2_print(130, y, buffer, color);
+
     }
+
+      if ((menu_id == MENU_KBD_JOY_RIGHT) || (menu_id == MENU_KBD_RESET)) {
+        y += y_step / 2;
+      }
+
     y += y_step;
   }
 
-  psp_menu_display_save_name();
+  /* dc 20130702 */
+  // psp_menu_display_save_name();
 }
 
 static void
@@ -239,7 +249,7 @@ static void
 psp_keyboard_menu_reset_kbd(void)
 {
   psp_display_screen_kbd_menu();
-  psp_sdl_back2_print(180, 80, "Reset Keyboard !", 
+  psp_sdl_back2_print(180, 80, "Reset Keyboard!", 
                      PSP_MENU_WARNING_COLOR);
   psp_sdl_flip();
   psp_kbd_default_settings();
@@ -254,7 +264,7 @@ static void
 psp_keyboard_menu_hotkeys(void)
 {
   psp_display_screen_kbd_menu();
-  psp_sdl_back2_print(180, 80, "Set Hotkeys !", 
+  psp_sdl_back2_print(180, 80, "Set Hotkeys!", 
                      PSP_MENU_WARNING_COLOR);
   psp_sdl_flip();
   psp_kbd_reset_hotkeys();
@@ -274,7 +284,7 @@ psp_keyboard_menu_load()
   if (ret ==  1) /* load OK */
   {
     psp_display_screen_kbd_menu();
-    psp_sdl_back2_print(180, 80, "File loaded !", 
+    psp_sdl_back2_print(180, 80, "File loaded!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -283,7 +293,7 @@ psp_keyboard_menu_load()
   if (ret == -1) /* Load Error */
   {
     psp_display_screen_kbd_menu();
-    psp_sdl_back2_print(180, 80, "Can't load file !", 
+    psp_sdl_back2_print(180, 80, "Can't load file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -333,7 +343,7 @@ psp_keyboard_menu_save()
   if (! error) /* save OK */
   {
     psp_display_screen_kbd_menu();
-    psp_sdl_back2_print(180, 80, "File saved !", 
+    psp_sdl_back2_print(180, 80, "File saved!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -341,7 +351,7 @@ psp_keyboard_menu_save()
   else 
   {
     psp_display_screen_kbd_menu();
-    psp_sdl_back2_print(180, 80, "Can't save file !", 
+    psp_sdl_back2_print(180, 80, "Can't save file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);

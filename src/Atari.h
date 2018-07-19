@@ -19,7 +19,7 @@ extern "C" {
 # define ATARI_MAX_SAVE_STATE 5
 # define ATARI_MAX_CHEAT        10
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #define ATARI_CHEAT_NONE    0
 #define ATARI_CHEAT_ENABLE  1

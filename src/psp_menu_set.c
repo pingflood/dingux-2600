@@ -59,20 +59,20 @@ extern SDL_Surface *back_surface;
 
   static menu_item_t menu_list[] =
   {
-    { "Sound enable       :"},
-    { "Display fps        :"},
-    { "Speed limiter      :"},
-    { "Skip frame         :"},
-    { "Render mode        :"},
-    { "Flicker mode       :"},
-    { "Clock frequency    :"},
-    { "Load settings"        },
-    { "Save settings"        },
-    { "Reset settings"       },
-    { "Back to Menu"         }
+    { "Sound enable"},
+    { "Display FPS"},
+    { "Speed limiter"},
+    { "Frame skip"},
+    { "Render mode"},
+    { "Flicker mode"},
+    { "Clock frequency"},
+    { "Load settings" },
+    { "Save settings" },
+    { "Reset settings" },
+    { "Back to Menu" }
   };
 
-  static int cur_menu_id = MENU_SET_LOAD;
+  static int cur_menu_id = MENU_SET_BACK;
 
   static int atari_snd_enable     = 0;
   static int atari_render_mode    = 0;
@@ -95,8 +95,8 @@ psp_display_screen_settings_menu(void)
 
   psp_sdl_blit_help();
   
-  x      = 50;
-  y      = 15;
+  x      = 10;
+  y      = 5; /* dc 20130702 */
   y_step = 10;
   
   for (menu_id = 0; menu_id < MAX_MENU_SET_ITEM; menu_id++) {
@@ -106,50 +106,50 @@ psp_display_screen_settings_menu(void)
     psp_sdl_back2_print(x, y, menu_list[menu_id].title, color);
 
     if (menu_id == MENU_SET_SOUND) {
-      if (atari_snd_enable) strcpy(buffer,"yes");
-      else                 strcpy(buffer,"no ");
-      string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(180, y, buffer, color);
+      if (atari_snd_enable) strcpy(buffer,": yes");
+      else                 strcpy(buffer,": no");
+      // string_fill_with_space(buffer, 4);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_SET_VIEW_FPS) {
-      if (atari_view_fps) strcpy(buffer,"yes");
-      else                strcpy(buffer,"no ");
-      string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(180, y, buffer, color);
+      if (atari_view_fps) strcpy(buffer,": yes");
+      else                strcpy(buffer,": no");
+      // string_fill_with_space(buffer, 4);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_SET_SKIP_FPS) {
-      sprintf(buffer,"%d", atari_skip_fps);
-      string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(180, y, buffer, color);
+      sprintf(buffer,": %d", atari_skip_fps);
+      // string_fill_with_space(buffer, 4);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_SET_SPEED_LIMIT) {
-      if (atari_speed_limiter == 0) strcpy(buffer,"no");
-      else sprintf(buffer, "%d fps", atari_speed_limiter);
-      string_fill_with_space(buffer, 10);
-      psp_sdl_back2_print(180, y, buffer, color);
+      if (atari_speed_limiter == 0) strcpy(buffer,": no");
+      else sprintf(buffer, ": %d FPS", atari_speed_limiter);
+      // string_fill_with_space(buffer, 10);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_SET_RENDER) {
 
-      /* if (atari_render_mode == ATARI_RENDER_NORMAL) */ strcpy(buffer, "normal");
-      string_fill_with_space(buffer, 13);
-      psp_sdl_back2_print(180, y, buffer, color);
+      /* if (atari_render_mode == ATARI_RENDER_NORMAL) */ strcpy(buffer, ": normal");
+      // string_fill_with_space(buffer, 13);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_SET_FLICKER_MODE) {
 
-      if (atari_flicker_mode == ATARI_FLICKER_NONE)     strcpy(buffer, "none");
+      if (atari_flicker_mode == ATARI_FLICKER_NONE)     strcpy(buffer, ": none");
       else 
-      if (atari_flicker_mode == ATARI_FLICKER_SIMPLE)   strcpy(buffer, "simple");
+      if (atari_flicker_mode == ATARI_FLICKER_SIMPLE)   strcpy(buffer, ": simple");
       else
-      if (atari_flicker_mode == ATARI_FLICKER_PHOSPHOR) strcpy(buffer, "phosphor");
-      else                                              strcpy(buffer, "average");
+      if (atari_flicker_mode == ATARI_FLICKER_PHOSPHOR) strcpy(buffer, ": phosphor");
+      else                                              strcpy(buffer, ": average");
 
-      string_fill_with_space(buffer, 13);
-      psp_sdl_back2_print(180, y, buffer, color);
+      // string_fill_with_space(buffer, 13);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_SET_CLOCK) {
-      sprintf(buffer,"%d", psp_cpu_clock);
-      string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(180, y, buffer, color);
+      sprintf(buffer,": %d", psp_cpu_clock);
+      // string_fill_with_space(buffer, 4);
+      psp_sdl_back2_print(130, y, buffer, color);
       y += y_step;
     } else
     if (menu_id == MENU_SET_RESET) {
@@ -159,7 +159,8 @@ psp_display_screen_settings_menu(void)
     y += y_step;
   }
 
-  psp_menu_display_save_name();
+  /* dc 20130702 */
+  // psp_menu_display_save_name();
 }
 
 static void

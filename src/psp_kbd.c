@@ -25,7 +25,7 @@
 #include <sys/time.h>
 #include <fcntl.h>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include "Atari.h"
 #include "global.h"
@@ -583,6 +583,10 @@ psp_kbd_enter_danzeff()
   if (danzeff_key > DANZEFF_START) {
     atari_key = atari_get_key_from_ascii(danzeff_key);
 
+    printf("atari_key: %d:", atari_key);
+    printf("danzeff_key: %d:", danzeff_key);
+    fflush(stdout);
+
     if (atari_key != -1) {
       danzeff_atari_key     = atari_key;
       danzeff_atari_pending = 1;
@@ -836,7 +840,8 @@ psp_update_keys(void)
     }
     gp2xCtrlPeekBufferPositive(&loc_button_data, 1);
 
-    psp_main_menu();
+     /* dc 20130702 */
+    // psp_main_menu();
     psp_init_keyboard();
 
     return 0;

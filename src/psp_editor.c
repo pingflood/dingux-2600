@@ -24,7 +24,7 @@
 #include <time.h>
 #include <ctype.h>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include "global.h"
 #include "psp_sdl.h"
@@ -773,10 +773,10 @@ psp_editor_insert_char(int line_id, int col_id, int c)
 {
   PSPWRITE.is_modified = 1;
 
-  UCHAR c1 = (c >> 8) & 0xff;
-  UCHAR c2 = c & 0xff;
+  uchar c1 = (c >> 8) & 0xff;
+  uchar c2 = c & 0xff;
   if ((c1 == 0xc2) || (c1 == 0xc3)) {
-    UCHAR new_c = psp_convert_utf8_to_iso_8859_1(c1, c2);
+    uchar new_c = psp_convert_utf8_to_iso_8859_1(c1, c2);
     if (new_c) { c = new_c; }
   }
 
@@ -1086,7 +1086,7 @@ psp_editor_load(char *edit_filename)
       int index;
       int target = 0;
       for (index = 0; loc_Buffer[index]; index++) {
-        UCHAR c = (UCHAR)loc_Buffer[index];
+        uchar c = (uchar)loc_Buffer[index];
         /* expand tabs */
         if (c == '\t') {
           if (PSPWRITE.expand_tab) {

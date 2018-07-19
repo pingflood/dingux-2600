@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <zlib.h>
 #include "global.h"
-#include "SDL/SDL.h"
+#include "SDL.h"
 
 #include <stdlib.h>
 #include <stdio.h>

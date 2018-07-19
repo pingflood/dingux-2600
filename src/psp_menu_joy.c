@@ -58,21 +58,21 @@ extern SDL_Surface *back_surface;
 
   static menu_item_t menu_list[] =
   {
-    { "Active Joystick    :"},
-    { "Swap Analog/Cursor :"},
-    { "Auto fire period   :"},
-    { "Auto fire mode     :"},
-    { "Atari paddle       :"},
-    { "Atari paddle speed :"},
+    { "Active Joystick" },
+    { "Swap Analog/Cursor" },
+    { "Auto fire period" },
+    { "Auto fire mode" },
+    { "Atari paddle" },
+    { "Atari paddle speed" },
 
-    { "Load joystick"       },
-    { "Save joystick"       },
-    { "Reset joystick"      },
+    { "Load joystick" },
+    { "Save joystick" },
+    { "Reset joystick" },
 
-    { "Back to Menu"        }
+    { "Back to Menu" }
   };
 
-  static int cur_menu_id = MENU_JOY_LOAD;
+  static int cur_menu_id = MENU_JOY_BACK;
 
   static int psp_reverse_analog     = 0;
   static int psp_active_joystick    = 0;
@@ -119,8 +119,8 @@ psp_display_screen_joystick_menu(void)
 
   psp_sdl_blit_help();
   
-  x      = 50;
-  y      = 15;
+  x      = 10;
+  y      = 5; /* dc 20130702 */
   y_step = 10;
   
   for (menu_id = 0; menu_id < MAX_MENU_JOY_ITEM; menu_id++) {
@@ -130,38 +130,38 @@ psp_display_screen_joystick_menu(void)
     psp_sdl_back2_print(x, y, menu_list[menu_id].title, color);
 
     if (menu_id == MENU_JOY_ANALOG) {
-      if (psp_reverse_analog) strcpy(buffer,"yes");
-      else                    strcpy(buffer,"no ");
-      string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(180, y, buffer, color);
+      if (psp_reverse_analog) strcpy(buffer,": yes");
+      else                    strcpy(buffer,": no");
+      // string_fill_with_space(buffer, 4);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_JOY_AUTOFIRE_T) {
-      sprintf(buffer,"%d", atari_auto_fire_period+1);
-      string_fill_with_space(buffer, 7);
-      psp_sdl_back2_print(180, y, buffer, color);
+      sprintf(buffer,": %d", atari_auto_fire_period+1);
+      // string_fill_with_space(buffer, 7);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_JOY_AUTOFIRE_M) {
-      if (atari_auto_fire_mode) strcpy(buffer,"yes");
-      else                    strcpy(buffer,"no ");
-      string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(180, y, buffer, color);
+      if (atari_auto_fire_mode) strcpy(buffer,": yes");
+      else                    strcpy(buffer,": no");
+      // string_fill_with_space(buffer, 4);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_JOY_JOYSTICK) {
-      if (psp_active_joystick) strcpy(buffer,"player 2");
-      else                     strcpy(buffer,"player 1 ");
-      string_fill_with_space(buffer, 10);
-      psp_sdl_back2_print(180, y, buffer, color);
+      if (psp_active_joystick) strcpy(buffer,": player 2");
+      else                     strcpy(buffer,": player 1");
+      // string_fill_with_space(buffer, 10);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_JOY_PADDLE) {
-      if (atari_paddle_enable) strcpy(buffer,"yes");
-      else                     strcpy(buffer,"no ");
-      string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(180, y, buffer, color);
+      if (atari_paddle_enable) strcpy(buffer,": yes");
+      else                     strcpy(buffer,": no");
+      // string_fill_with_space(buffer, 4);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_JOY_PADDLE_SPEED) {
-      sprintf(buffer, "%d", atari_paddle_speed);
-      string_fill_with_space(buffer, 10);
-      psp_sdl_back2_print(180, y, buffer, color);
+      sprintf(buffer, ": %d", atari_paddle_speed);
+      // string_fill_with_space(buffer, 10);
+      psp_sdl_back2_print(130, y, buffer, color);
       y += y_step;
     } else
     if (menu_id == MENU_JOY_RESET) {
@@ -171,7 +171,8 @@ psp_display_screen_joystick_menu(void)
     y += y_step;
   }
 
-  psp_menu_display_save_name();
+  /* dc 20130702 */
+  // psp_menu_display_save_name();
 }
 
 static void
@@ -208,7 +209,7 @@ psp_joystick_menu_load(int format)
   if (ret ==  1) /* load OK */
   {
     psp_display_screen_joystick_menu();
-    psp_sdl_back2_print(180,  80, "File loaded !", 
+    psp_sdl_back2_print(180,  80, "File loaded!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -218,7 +219,7 @@ psp_joystick_menu_load(int format)
   if (ret == -1) /* Load Error */
   {
     psp_display_screen_joystick_menu();
-    psp_sdl_back2_print(180,  80, "Can't load file !", 
+    psp_sdl_back2_print(180,  80, "Can't load file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -236,7 +237,7 @@ psp_joystick_menu_save_config()
   if (! error) /* save OK */
   {
     psp_display_screen_joystick_menu();
-    psp_sdl_back2_print(180, 80, "File saved !", 
+    psp_sdl_back2_print(180, 80, "File saved!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -244,7 +245,7 @@ psp_joystick_menu_save_config()
   else 
   {
     psp_display_screen_joystick_menu();
-    psp_sdl_back2_print(180, 80, "Can't save file !", 
+    psp_sdl_back2_print(180, 80, "Can't save file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -262,7 +263,7 @@ psp_joystick_menu_save()
   if (! error) /* save OK */
   {
     psp_display_screen_joystick_menu();
-    psp_sdl_back2_print(180, 80, "File saved !", 
+    psp_sdl_back2_print(180, 80, "File saved!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -270,7 +271,7 @@ psp_joystick_menu_save()
   else 
   {
     psp_display_screen_joystick_menu();
-    psp_sdl_back2_print(180, 80, "Can't save file !", 
+    psp_sdl_back2_print(180, 80, "Can't save file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -281,7 +282,7 @@ static void
 psp_joystick_menu_reset(void)
 {
   psp_display_screen_joystick_menu();
-  psp_sdl_back2_print( 180, 80, "Reset joystick !", 
+  psp_sdl_back2_print( 180, 80, "Reset joystick!", 
                      PSP_MENU_WARNING_COLOR);
   psp_sdl_flip();
   psp_joy_default_settings();

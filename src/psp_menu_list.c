@@ -26,7 +26,7 @@
 #include <sys/time.h>
 #include <fcntl.h>
 
-#include "SDL/SDL.h"
+#include "SDL.h"
 
 #include "global.h"
 #include "psp_kbd.h"
@@ -118,8 +118,8 @@ psp_display_screen_cheat_list(void)
   
   psp_sdl_blit_help();
 
-  x      = 40;
-  y      =  0;
+  x      = 0;
+  y      = 5;
   y_step = 10;
 
   cheat_line = psp_cheat_top;

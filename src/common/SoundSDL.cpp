@@ -21,7 +21,7 @@
 #include <sstream>
 #include <cassert>
 #include <cmath>
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "global.h"
 
 #include "TIASnd.hxx"
@@ -105,7 +105,7 @@ void SoundSDL::initialize()
       desired.callback = callback;
       desired.userdata = (void*)this;
 # else
-      desired.freq   = 31400; //44100
+      desired.freq   = 44100;
       desired.format = AUDIO_S16;
       desired.channels = myNumChannels;
       desired.samples  = fragsize;

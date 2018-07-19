@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <stdint.h>
 
 #include "Console.hxx"
 #include "Control.hxx"

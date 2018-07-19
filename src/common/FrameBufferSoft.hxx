@@ -19,7 +19,7 @@
 #ifndef FRAMEBUFFER_SOFT_HXX
 #define FRAMEBUFFER_SOFT_HXX
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 class OSystem;
 # if 0 //LUDO:

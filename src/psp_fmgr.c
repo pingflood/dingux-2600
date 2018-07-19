@@ -332,7 +332,7 @@ static  int sel=0;
   int  last_time;
   int  tmp;
   long color;
-  int top, rows=20, x, y, i, up=0;
+  int top, rows=22, x, y, i, up=0;  /* dc 20130702 */
   char path[GP2X_FMGR_MAX_PATH];
   char oldDir[GP2X_FMGR_MAX_NAME];
   char buffer[GP2X_FMGR_MAX_NAME];
@@ -378,7 +378,7 @@ static  int sel=0;
 
   for(;;) 
   {
-    x = 0; y = 15;
+    x = 10; y = 10;  /* dc 20130702 */
 
     if (check_thumb) {
       check_thumb   = 0;
@@ -404,8 +404,8 @@ static  int sel=0;
       if(top+i >= nfiles) break;
       if(top+i == sel) color = PSP_MENU_SEL_COLOR;
       else             color = PSP_MENU_TEXT_COLOR;
-      strncpy(buffer, sortfiles[top+i]->d_name, 28);
-      string_fill_with_space(buffer, 28);
+      strncpy(buffer, sortfiles[top+i]->d_name, 50);  /* dc 20130702 */
+      string_fill_with_space(buffer, 50); /* dc 20130702 */
       psp_sdl_back2_print(x, y, buffer, color);
       y += 10;
     }

@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "psp_sdl.h"
 #include "psp_irda.h"
 #include "psp_irkeyb.h"

@@ -19,7 +19,7 @@
 #ifndef FRAMEBUFFER_HXX
 #define FRAMEBUFFER_HXX
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #include "bspf.hxx"
 #include "Event.hxx"

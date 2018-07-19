@@ -30,8 +30,8 @@
   extern unsigned char psp_font_6x10[];
 
   unsigned char *psp_font;
-  int            psp_font_width  = 8; 
-  int            psp_font_height = 8; 
+  int            psp_font_width  = 14; 
+  int            psp_font_height = 14; 
 
   SDL_Surface *back_surface;
   SDL_Surface *back2_surface;
@@ -44,7 +44,7 @@
   SDL_Surface *save_surface;
 
 uint
-psp_sdl_rgb(UCHAR R, UCHAR G, UCHAR B)
+psp_sdl_rgb(uchar R, uchar G, uchar B)
 {
   return SDL_MapRGB(back_surface->format, R,G,B);
 }
@@ -198,7 +198,7 @@ psp_sdl_fill_rectangle(int x, int y, int w, int h, int color, int mode)
 static int
 psp_sdl_get_back2_color(int x, int y)
 {
-  UCHAR *back2 = (UCHAR *)back2_surface->pixels;
+  uchar *back2 = (uchar *)back2_surface->pixels;
   int bytes_per_pixels = back2_surface->format->BytesPerPixel;
   int pitch            = back2_surface->pitch;
   Uint8 r = back2[0 + (y * pitch) + (x * bytes_per_pixels)];
@@ -228,7 +228,7 @@ psp_sdl_back2_rectangle(int x, int y, int w, int h)
 }
 
 void 
-psp_sdl_put_char(int x, int y, int color, int bgcolor, UCHAR c, int drawfg, int drawbg)
+psp_sdl_put_char(int x, int y, int color, int bgcolor, uchar c, int drawfg, int drawbg)
 {
   int cx;
   int cy;
@@ -253,7 +253,7 @@ psp_sdl_put_char(int x, int y, int color, int bgcolor, UCHAR c, int drawfg, int 
 }
 
 void 
-psp_sdl_back2_put_char(int x, int y, int color, UCHAR c)
+psp_sdl_back2_put_char(int x, int y, int color, uchar c)
 {
   int cx;
   int cy;
@@ -301,9 +301,9 @@ psp_sdl_fill_print(int x,int y,const char *str, int color, int bgcolor)
   int x0 = x;
 
   for (index = 0; str[index] != '\0'; index++) {
-    UCHAR c = str[index];
+    uchar c = str[index];
     if ((c == 0xc2) || (c == 0xc3)) {
-      UCHAR new_c = psp_convert_utf8_to_iso_8859_1(c, str[index+1]);
+      uchar new_c = psp_convert_utf8_to_iso_8859_1(c, str[index+1]);
       if (new_c) { c = new_c; index++; }
     }
     psp_sdl_put_char(x, y, color, bgcolor, c, 1, 1);
@@ -322,9 +322,9 @@ psp_sdl_back2_print(int x,int y,const char *str, int color)
   int x0 = x;
 
   for (index = 0; str[index] != '\0'; index++) {
-    UCHAR c = str[index];
+    uchar c = str[index];
     if ((c == 0xc2) || (c == 0xc3)) {
-      UCHAR new_c = psp_convert_utf8_to_iso_8859_1(c, str[index+1]);
+      uchar new_c = psp_convert_utf8_to_iso_8859_1(c, str[index+1]);
       if (new_c) { c = new_c; index++; }
     }
     psp_sdl_back2_put_char(x, y, color, c);
@@ -403,7 +403,7 @@ psp_sdl_display_splash()
   int index = 0;
   gp2xCtrlData c;
 
-  int x = (400 - (strlen(ATARI_VERSION) * 8)) / 2;
+  int x = (320 - (strlen(ATARI_VERSION) * 8)) / 2;
   int y = 240 - 16;
   //int col = psp_sdl_rgb(0xa0, 0xa0, 0xa0);
   int col = psp_sdl_rgb(0x0, 0x0, 0x0);

@@ -22,10 +22,10 @@
 extern "C" {
 #endif
 
-# define GP2X_DEF_CLOCK     336
-# define GP2X_MIN_CLOCK     216
-# define GP2X_DEF_EMU_CLOCK 336
-# define GP2X_MAX_CLOCK     432
+# define GP2X_DEF_CLOCK     200
+# define GP2X_MIN_CLOCK     160
+# define GP2X_DEF_EMU_CLOCK 200
+# define GP2X_MAX_CLOCK     430
 
 void cpu_init(void);
 void cpu_deinit(void);

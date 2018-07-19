@@ -25,6 +25,15 @@
 #include <string.h>
 #include <sstream>
 
+
+
+/* dc 20130702 */
+#include <sys/param.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <stdio.h>
+#include <unistd.h>
+
 /*
  * Implementation of the Stella file system API based on POSIX for PSP
  */
@@ -222,7 +231,7 @@ AbstractFilesystemNode *PSPFilesystemNode::parent() const
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 bool AbstractFilesystemNode::fileExists(const string& path)
 {
-# if 0 //LUDO:
+#if 0 //LUDO:
     SceIoStat st;
 #ifdef PSP_DEBUG
     fprintf(stdout,"AbstractFilesystemNode::fileExists '%s'\n",path.c_str());
@@ -238,7 +247,13 @@ bool AbstractFilesystemNode::fileExists(const string& path)
 #endif
     return !FIO_SO_ISREG(st.st_mode);
 # else
-  return false;
+/* dc 20130702 */
+  struct stat st;
+  if(stat(path.c_str(), &st) != 0)
+    return false;
+
+  return S_ISREG(st.st_mode);
+  // return false;
 # endif
 }
 

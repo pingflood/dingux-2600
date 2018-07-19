@@ -27,7 +27,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include "psp_fmgr.h"
 #include "psp_kbd.h"
 #include "psp_battery.h"

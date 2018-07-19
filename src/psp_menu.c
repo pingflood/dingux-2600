@@ -53,34 +53,34 @@ extern SDL_Surface *back_surface;
 # define MENU_SAVE_SLOT    3
 # define MENU_DEL_SLOT     4
 
-# define MENU_HELP         5
+ # define MENU_HELP         995 /* dc 20130702 */
 
-# define MENU_LOAD_ROM     6
+ # define MENU_LOAD_ROM     996 /* dc 20130702 */
 
-# define MENU_EDITOR       7
-# define MENU_CHEATS       8
-# define MENU_KEYBOARD     9
-# define MENU_JOYSTICK    10
-# define MENU_SETTINGS    11
+# define MENU_EDITOR       5
+# define MENU_CHEATS       6
+# define MENU_KEYBOARD     7
+# define MENU_JOYSTICK     8
+# define MENU_SETTINGS     9
 
-# define MENU_RESET       12
-# define MENU_BACK        13
-# define MENU_EXIT        14
+# define MENU_RESET       10
+# define MENU_BACK        11
+# define MENU_EXIT        12
 
 # define MAX_MENU_ITEM (MENU_EXIT + 1)
 
   static menu_item_t menu_list[] =
   {
-    { "Save Screenshot :" },
-    { "Volume          :" },
+    { "Save Screenshot" },
+    { "Volume" },
 
     { "Load Slot" },
     { "Save Slot" },
     { "Delete Slot" },
 
-    { "Help" },
+    // { "Help" }, /* dc 20130702 */
 
-    { "Load Rom" },   
+    // { "Load Rom" },    /* dc 20130702 */
 
     { "Comments" },
     { "Cheats" },
@@ -93,18 +93,25 @@ extern SDL_Surface *back_surface;
     { "Exit" }
   };
 
-  static int cur_menu_id = MENU_LOAD_ROM;
+  static int cur_menu_id = MENU_BACK; /* dc 20130702 */
+  // static int cur_menu_id = MENU_LOAD_ROM; /* dc 20130702 */
+
   static int cur_slot    = 0;
 
 void 
 psp_menu_display_save_name()
 {
+  /* dc 20130702 */
+  // return;
+
   char buffer[128];
   int Length;
 
-  snprintf(buffer, 30, "Game: %s", ATARI.atari_save_name);
+  // snprintf(buffer, 30, "Game: %s", ATARI.atari_save_name);
+  snprintf(buffer, 30, "%s", ATARI.atari_save_name);
   Length = strlen(buffer);
-  psp_sdl_back2_print(360 - (6*Length),  5, buffer, PSP_MENU_TEXT2_COLOR);
+  // psp_sdl_back2_print(300 - (6*Length),  5, buffer, PSP_MENU_TEXT2_COLOR);
+  psp_sdl_back2_print(10,  5, buffer, PSP_MENU_TEXT2_COLOR);
 }
 
 void
@@ -129,20 +136,19 @@ psp_display_screen_menu(void)
   int x       = 0;
   int y       = 0;
   int y_step  = 0;
+  int x_step  = 0; /* dc 20130702 */
 
   psp_sdl_blit_background();
   
-  x      = 50;
-  y      = 15;
+  x      = 10;
+  y      = 20; /* dc 20130702 */
   y_step = 10;
-  
+
   for (menu_id = 0; menu_id < MAX_MENU_ITEM; menu_id++) {
     color = PSP_MENU_TEXT_COLOR;
     if (cur_menu_id == menu_id) color = PSP_MENU_SEL_COLOR;
-    else 
-    if (menu_id == MENU_EXIT) color = PSP_MENU_WARNING_COLOR;
-    else
-    if (menu_id == MENU_HELP) color = PSP_MENU_GREEN_COLOR;
+    // else if (menu_id == MENU_EXIT) color = PSP_MENU_WARNING_COLOR;
+    // else if (menu_id == MENU_HELP) color = PSP_MENU_GREEN_COLOR;
 
     if (menu_id == MENU_EDITOR) {
       if (ATARI.comment_present) {
@@ -156,14 +162,14 @@ psp_display_screen_menu(void)
     }
 
     if (menu_id == MENU_SCREENSHOT) {
-      sprintf(buffer,"%d", ATARI.psp_screenshot_id);
+      sprintf(buffer,": %d", ATARI.psp_screenshot_id);
       string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(160, y, buffer, color);
+      psp_sdl_back2_print(130, y, buffer, color);
     } else
     if (menu_id == MENU_VOLUME) {
-      sprintf(buffer,"%d", gp2xGetSoundVolume());
+      sprintf(buffer,": %d", gp2xGetSoundVolume());
       string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(160, y, buffer, color);
+      psp_sdl_back2_print(130, y, buffer, color);
       y += y_step;
     } else
     if (menu_id == MENU_DEL_SLOT) {
@@ -187,7 +193,9 @@ psp_display_screen_menu(void)
     y += y_step;
   }
   y_step = 10;
-  y      = 35;
+  y      = 50; /* dc 20130702 */
+  x_step = 30; /* dc 20130702 */
+  x      = 142; /* dc 20130702 */
 
   for (slot_id = 0; slot_id < ATARI_MAX_SAVE_STATE; slot_id++) {
     if (slot_id == cur_slot) color = PSP_MENU_SEL2_COLOR;
@@ -200,22 +208,29 @@ psp_display_screen_menu(void)
          my_date->tm_mday, my_date->tm_mon, 
          my_date->tm_hour, my_date->tm_min, my_date->tm_sec );
 # else
-      sprintf(buffer, "- used");
+      sprintf(buffer, "[x]");
 # endif
     } else {
-      sprintf(buffer, "- empty");
+      sprintf(buffer, "[ ]");
     }
-    string_fill_with_space(buffer, 32);
-    psp_sdl_back2_print(180, y, buffer, color);
+    // string_fill_with_space(buffer, 32); /* dc 20130702 */
+    // psp_sdl_back2_print(100, y, buffer, color); /* dc 20130702 */
+    psp_sdl_back2_print(x, y, buffer, color);
 
-    y += y_step;
+    // y += y_step; /* dc 20130702 */
+    x += x_step;
   }
+
+  y += 1.5*y_step;
+  x = 140;
 
   if (ATARI.atari_save_state[cur_slot].thumb) {
-    psp_sdl_blit_thumb(220,125, ATARI.atari_save_state[cur_slot].surface);
-  } else {
-    psp_sdl_blit_thumb(220,125, thumb_surface);
-  }
+    psp_sdl_blit_thumb(x, y, ATARI.atari_save_state[cur_slot].surface);
+  } 
+  /* dc 20130702 */
+  /*else {
+    psp_sdl_blit_thumb(110,70, thumb_surface);
+  }*/
 
   psp_menu_display_save_name();
 }
@@ -225,7 +240,7 @@ psp_main_menu_reset(void)
 {
   /* Reset ! */
   psp_display_screen_menu();
-  psp_sdl_back2_print(130, 110, "Reset Atari !", PSP_MENU_WARNING_COLOR);
+  psp_sdl_back2_print( 90, 110, "Reset Atari!", PSP_MENU_WARNING_COLOR);
   psp_sdl_flip();
   atari_emulator_reset();
   sleep(1);
@@ -240,7 +255,7 @@ psp_main_menu_load(int format)
   if (ret ==  1) /* load OK */
   {
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "File loaded !", 
+    psp_sdl_back2_print( 90, 110, "File loaded!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -250,7 +265,7 @@ psp_main_menu_load(int format)
   if (ret == -1) /* Load Error */
   {
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "Can't load file !", 
+    psp_sdl_back2_print( 90, 110, "Can't load file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -282,7 +297,7 @@ psp_main_menu_load_slot()
   if (! ATARI.atari_save_state[cur_slot].used) {
 
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "Slot is empty !", 
+    psp_sdl_back2_print( 90, 110, "Slot is empty!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -295,7 +310,7 @@ psp_main_menu_load_slot()
   if (! error) /* save OK */
   {
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "File loaded !", 
+    psp_sdl_back2_print( 90, 110, "File loaded!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -305,7 +320,7 @@ psp_main_menu_load_slot()
   else 
   {
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "Can't load file !", 
+    psp_sdl_back2_print( 90, 110, "Can't load file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -322,7 +337,7 @@ psp_main_menu_save_slot()
   if (! error) /* save OK */
   {
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "File saved !", 
+    psp_sdl_back2_print( 90, 110, "File saved!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -330,7 +345,7 @@ psp_main_menu_save_slot()
   else 
   {
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "Can't save file !", 
+    psp_sdl_back2_print( 90, 110, "Can't save file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -345,7 +360,7 @@ psp_main_menu_del_slot()
   if (! ATARI.atari_save_state[cur_slot].used) {
 
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "Slot is empty !", 
+    psp_sdl_back2_print( 90, 110, "Slot is empty!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -358,7 +373,7 @@ psp_main_menu_del_slot()
   if (! error) /* save OK */
   {
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "File deleted !", 
+    psp_sdl_back2_print( 90, 110, "File deleted!", 
                        PSP_MENU_NOTE_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -366,7 +381,7 @@ psp_main_menu_del_slot()
   else 
   {
     psp_display_screen_menu();
-    psp_sdl_back2_print(130, 110, "Can't delete file !", 
+    psp_sdl_back2_print( 90, 110, "Can't delete file!", 
                        PSP_MENU_WARNING_COLOR);
     psp_sdl_flip();
     sleep(1);
@@ -405,7 +420,7 @@ psp_main_menu_exit(void)
   gp2xCtrlData c;
 
   psp_display_screen_menu();
-  psp_sdl_back2_print(130, 110, "press B to confirm !", PSP_MENU_WARNING_COLOR);
+  psp_sdl_back2_print( 90, 110, "Press B to confirm!", PSP_MENU_WARNING_COLOR);
   psp_sdl_flip();
 
   psp_kbd_wait_no_button();
@@ -476,18 +491,17 @@ psp_main_menu(void)
 
     } else continue;
 
-    if ((c.Buttons & GP2X_CTRL_LTRIGGER) == GP2X_CTRL_LTRIGGER) {
+    if ((c.Buttons & GP2X_CTRL_LTRIGGER) == GP2X_CTRL_LTRIGGER)
+    {
       psp_settings_menu();
       old_pad = new_pad = 0;
-    } else
-    if ((c.Buttons & GP2X_CTRL_RTRIGGER) == GP2X_CTRL_RTRIGGER) {
+    }
+    else if ((c.Buttons & GP2X_CTRL_RTRIGGER) == GP2X_CTRL_RTRIGGER)
+    {
       psp_main_menu_reset();
       end_menu = 1;
-    } else
-    if ((new_pad == GP2X_CTRL_LEFT ) || 
-        (new_pad == GP2X_CTRL_RIGHT) ||
-        (new_pad == GP2X_CTRL_CROSS) || 
-        (new_pad == GP2X_CTRL_CIRCLE))
+    }
+    else if ((new_pad == GP2X_CTRL_LEFT ) || (new_pad == GP2X_CTRL_RIGHT))
     {
       int step = 0;
 
@@ -500,18 +514,32 @@ psp_main_menu(void)
 
       switch (cur_menu_id ) 
       {
-        case MENU_LOAD_SLOT : if (step) psp_main_menu_cur_slot(step);
-                              else
-                              if (psp_main_menu_load_slot()) {
+        case MENU_LOAD_SLOT : psp_main_menu_cur_slot(step);
+        break;
+        case MENU_SAVE_SLOT : psp_main_menu_cur_slot(step);
+        break;
+        case MENU_DEL_SLOT  : psp_main_menu_cur_slot(step);
+        break;
+        case MENU_VOLUME     : psp_main_menu_volume(step);
+                               old_pad = new_pad = 0;
+        break;              
+      }
+    }
+
+    else if ( (new_pad == GP2X_CTRL_CROSS) || (new_pad == GP2X_CTRL_CIRCLE))
+    {
+
+      switch (cur_menu_id) 
+      {
+        case MENU_LOAD_SLOT : if (psp_main_menu_load_slot()) {
                                 end_menu = 1;
                               }
         break;
-        case MENU_SAVE_SLOT : if (step) psp_main_menu_cur_slot(step);
-                              else      psp_main_menu_save_slot();
+        case MENU_SAVE_SLOT : psp_main_menu_save_slot();
         break;
-        case MENU_DEL_SLOT  : if (step) psp_main_menu_cur_slot(step);
-                              else      psp_main_menu_del_slot();
+        case MENU_DEL_SLOT  : psp_main_menu_del_slot();
         break;
+
 
         case MENU_LOAD_ROM  : if (psp_main_menu_load(FMGR_FORMAT_ROM)) {
                                 end_menu = 1;
@@ -539,9 +567,6 @@ psp_main_menu(void)
 
         case MENU_SCREENSHOT : psp_main_menu_screenshot();
                                end_menu = 1;
-        break;              
-        case MENU_VOLUME     : psp_main_menu_volume(step);
-                               old_pad = new_pad = 0;
         break;              
 
         case MENU_RESET     : psp_main_menu_reset();

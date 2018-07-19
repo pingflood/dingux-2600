@@ -37,14 +37,14 @@
 #include "Settings.hxx"
 #include "PropsSet.hxx"
 #include "EventHandler.hxx"
-# if 0 //LUDO:
+#if 0 //LUDO:
 #include "Menu.hxx"
 #include "CommandMenu.hxx"
 #include "Launcher.hxx"
 #include "Font.hxx"
 #include "StellaFont.hxx"
 #include "ConsoleFont.hxx"
-# endif
+#endif
 #include "bspf.hxx"
 #include "OSystem.hxx"
 
@@ -65,7 +65,7 @@ OSystem::OSystem()
     myCheatManager(NULL),
     myRomFile(""),
     myFeatures("")
-# if 0 //LUDO:
+#if 0 //LUDO:
     myFont(NULL),
     myConsoleFont(NULL)
 # endif
@@ -75,7 +75,7 @@ OSystem::OSystem()
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OSystem::~OSystem()
 {
-# if 0 //LUDO:
+#if 0 //LUDO:
   delete myMenu;
   delete myCommandMenu;
   delete myLauncher;
@@ -105,7 +105,7 @@ OSystem::~OSystem()
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 bool OSystem::create()
 {
-# if 0 //LUDO:
+#if 0 //LUDO:
   // Create fonts to draw text
   myFont         = new GUI::Font(GUI::stellaDesc);
   myLauncherFont = new GUI::Font(GUI::stellaDesc);  // FIXME
@@ -319,7 +319,7 @@ bool OSystem::createConsole(const string& romfile)
     #ifdef CHEATCODE_SUPPORT
       myCheatManager->loadCheats(md5);
     #endif
-# if 0 //LUDO:
+#if 0 //LUDO:
       if(showmessage)
         myFrameBuffer->showMessage("New console created");
       if(mySettings->getBool("showinfo"))
