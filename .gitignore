@@ -2,4 +2,5 @@
 /src/emucore/*.o
 /src/common/*.o
 /src/psp/*.o
-/src/dist/dingux-2600
+/src/dist/dingux-2600.dge
+/src/dist/roms/*

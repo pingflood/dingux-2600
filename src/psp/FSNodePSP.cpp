@@ -322,6 +322,6 @@ string AbstractFilesystemNode::modTime(const string& in)
 #endif
     return buf.str();
 # else
-  return false;
+  return "";
 # endif
 }
