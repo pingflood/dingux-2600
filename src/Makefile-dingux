@@ -20,9 +20,9 @@
 ATARI_VERSION=1.1.0
 
 TARGET = dingux-2600
-#SDL_CONFIG = /home/dc/Dingux/opendingux-toolchain/usr/bin/sdl-config
-SDL_CFLAGS = `/home/dc/Dingux/opendingux-toolchain/usr/bin/sdl-config --cflags`
-SDL_LIBS = `/home/dc/Dingux/opendingux-toolchain/usr/bin/sdl-config --libs`
+#SDL_CONFIG = /opendingux-toolchain/usr/bin/sdl-config
+SDL_CFLAGS = `/opendingux-toolchain/usr/bin/sdl-config --cflags`
+SDL_LIBS = `/opendingux-toolchain/usr/bin/sdl-config --libs`
 
 
 OBJS = gp2x_psp.o \
@@ -109,18 +109,18 @@ psp/SettingsPSP.o \
 psp/FSNodePSP.o \
 
 
-CC=/home/dc/Dingux/opendingux-toolchain/usr/bin/mipsel-linux-gcc
-CXX=/home/dc/Dingux/opendingux-toolchain/usr/bin/mipsel-linux-g++
-STRIP=/home/dc/Dingux/opendingux-toolchain/usr/bin/mipsel-linux-strip
+CC=/opendingux-toolchain/usr/bin/mipsel-linux-gcc
+CXX=/opendingux-toolchain/usr/bin/mipsel-linux-g++
+STRIP=/opendingux-toolchain/usr/bin/mipsel-linux-strip
 
 #DEFAULT_CFLAGS = $(shell $(SDL_CONFIG) --cflags)
 DEFAULT_CFLAGS = $(SDL_CFLAGS)
 
 
-#-I/home/dc/Dingux/opendingux-toolchain/usr/include/SDL \
+#-I/opendingux-toolchain/usr/include/SDL \
 
 MORE_CFLAGS = \
--I. -I/home/dc/Dingux/opendingux-toolchain/usr/include \
+-I. -I/opendingux-toolchain/usr/include \
  -DMPU_JZ4740 -mips32 \
  -Iemucore -Icommon -Ipsp -DPSP -DBSPF_PSP -DSOUND_SUPPORT \
  -O3 -fsigned-char -ffast-math -fomit-frame-pointer -fno-strength-reduce \
@@ -132,16 +132,16 @@ LDFLAGS = -static -s
 
 LIBS = $(SDL_LIBS)
 
-LIBS += -L/home/dc/Dingux/opendingux-toolchain/usr/lib \
--B/home/dc/Dingux/opendingux-toolchain/usr/lib \
+LIBS += -L/opendingux-toolchain/usr/lib \
+-B/opendingux-toolchain/usr/lib \
 /home/dc/Dingux/mipsel-linux-uclibc/usr/lib/libSDL_image.a \
 /home/dc/Dingux/mipsel-linux-uclibc/usr/lib/libSDL.a \
 -lpng -lz -lm -lpthread -lstdc++ -ldl
 
 
 
-#SDL_CFLAGS = `/home/dc/Dingux/opendingux-toolchain/usr/bin/sdl-config --cflags`
-#SDL_LIBS = `/home/dc/Dingux/opendingux-toolchain/usr/bin/sdl-config --libs`
+#SDL_CFLAGS = `/opendingux-toolchain/usr/bin/sdl-config --cflags`
+#SDL_LIBS = `/opendingux-toolchain/usr/bin/sdl-config --libs`
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
