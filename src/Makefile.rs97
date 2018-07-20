@@ -6,6 +6,11 @@
 
 CHAINPREFIX := /opt/rs97-toolchain
 CROSS_COMPILE := $(CHAINPREFIX)/usr/bin/mipsel-linux-
+
+CC = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
+STRIP = $(CROSS_COMPILE)strip
+
 SYSROOT     := $(shell $(CC) --print-sysroot)
 
 MSX_VERSION=1.1.0
@@ -96,20 +101,18 @@ psp/SettingsPSP.o \
 psp/FSNodePSP.o \
 
 
-CC = $(CROSS_COMPILE)gcc
-CXX = $(CROSS_COMPILE)g++
-STRIP = $(CROSS_COMPILE)strip
 
 DEFAULT_CFLAGS = $(shell $(SDL_CONFIG) --cflags)
 
 MORE_CFLAGS = -DNARROW -DSOUND -DBPP16 -DSDL -DLSB_FIRST \
 -I. -I$(SYSROOT)/usr/include  -I$(SYSROOT)/usr/lib  -I$(SYSROOT)/lib \
--DMPU_JZ4740 -mips32 \
+-DMPU_JZ4740 \
 -I./emucore -I./common -Ipsp -DPSP -DBSPF_PSP -DSOUND_SUPPORT \
--O3 -fsigned-char -ffast-math -fomit-frame-pointer -fno-strength-reduce \
--DDINGUX_MODE  \
+-fsigned-char -ffast-math -fomit-frame-pointer -fno-strength-reduce \
 -DATARI_VERSION=\"$(ATARI_VERSION)\" \
 #-g -DNO_STDIO_REDIRECT \
+
+MORE_CFLAGS += -DDINGUX_MODE -mips32 -O3
 
 LDFLAGS =  -s -lm -lz `$(SDL_CONFIG) --libs`
 
@@ -118,7 +121,7 @@ LIBS += \
 -lSDL_image -lpng \
 -lpthread  -ldl -lstdc++ \
 
-MORE_CFLAGS += -O2 -fomit-frame-pointer -ffunction-sections -ffast-math -fsingle-precision-constant -G0
+MORE_CFLAGS += -O2 -fomit-frame-pointer -ffunction-sections -ffast-math -fsingle-precision-constant # -G0
 LDFLAGS     += -Wl,--gc-sections
 
 CFLAGS = $(DEFAULT_CFLAGS) $(MORE_CFLAGS) 
