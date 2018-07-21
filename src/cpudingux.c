@@ -123,7 +123,7 @@ cpu_deinit()
   munmap((void *)jz_cpmregl, 0x80); 
   munmap((void *)jz_emcregl, 0x90);   
   close(jz_dev);
-  fcloseall();
+  // fcloseall();
   sync();
 }
 

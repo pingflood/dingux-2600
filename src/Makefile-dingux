@@ -134,8 +134,8 @@ LIBS = $(SDL_LIBS)
 
 LIBS += -L/opendingux-toolchain/usr/lib \
 -B/opendingux-toolchain/usr/lib \
-/home/dc/Dingux/mipsel-linux-uclibc/usr/lib/libSDL_image.a \
-/home/dc/Dingux/mipsel-linux-uclibc/usr/lib/libSDL.a \
+/opt/mipsel-linux-uclibc/usr/lib/libSDL_image.a \
+/opt/mipsel-linux-uclibc/usr/lib/libSDL.a \
 -lpng -lz -lm -lpthread -lstdc++ -ldl
 
 

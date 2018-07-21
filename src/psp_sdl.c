@@ -440,14 +440,12 @@ psp_sdl_unlock(void)
 void
 psp_sdl_flip(void)
 {
-  if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
+  // if(SDL_MUSTLOCK(ScreenSurface)) SDL_LockSurface(ScreenSurface);
   uint32_t *s = (uint32_t*)back_surface->pixels;
   uint32_t *d = (uint32_t*)ScreenSurface->pixels;
-  for(uint8_t y = 0; y < 239; y++, s += 160, d += 320) { // double-line fix by pingflood, 2018
-    memcpy(d, s, 1280);
-  }
-  if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);
-  SDL_Flip(ScreenSurface);
+  for(uint8_t y = 0; y < 240; y++, s += 160, d += 320) memmove(d, s, 1280); // double-line fix by pingflood, 2018
+  // if(SDL_MUSTLOCK(ScreenSurface)) SDL_UnlockSurface(ScreenSurface);
+  // SDL_Flip(ScreenSurface);
 }
 
 #define  systemRedShift      (back_surface->format->Rshift)
