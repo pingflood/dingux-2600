@@ -29,6 +29,7 @@ extern "C" {
 # define PSP_MENU_BACKGROUND_COLOR psp_sdl_rgb(0x00,0x00,0x00)
 # define PSP_MENU_BLACK_COLOR      psp_sdl_rgb(0x00,0x00,0x00)
 # define PSP_MENU_AUTHOR_COLOR     psp_sdl_rgb(0x00,0x00,0xFF)
+# define PSP_MENU_BLUE_COLOR       psp_sdl_rgb(0x00,0x00,0xFF)
 # define PSP_MENU_GREEN_COLOR      psp_sdl_rgb(0x00,0xFF,0x00)
 # define PSP_MENU_RED_COLOR        psp_sdl_rgb(0xFF,0x00,0x00)
 

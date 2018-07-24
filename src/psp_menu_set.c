@@ -42,20 +42,20 @@
 
 extern SDL_Surface *back_surface;
 
-# define MENU_SET_SOUND         0
-# define MENU_SET_VIEW_FPS      1
-# define MENU_SET_SPEED_LIMIT   2
-# define MENU_SET_SKIP_FPS      3
-# define MENU_SET_RENDER        4
-# define MENU_SET_FLICKER_MODE  5
-# define MENU_SET_CLOCK         6
-
-# define MENU_SET_LOAD          7
-# define MENU_SET_SAVE          8
-# define MENU_SET_RESET         9
-# define MENU_SET_BACK         10
-
-# define MAX_MENU_SET_ITEM (MENU_SET_BACK + 1)
+enum{
+  MENU_SET_SOUND,
+  MENU_SET_VIEW_FPS,
+  MENU_SET_SPEED_LIMIT,
+  MENU_SET_SKIP_FPS,
+  MENU_SET_RENDER,
+  MENU_SET_FLICKER_MODE,
+  MENU_SET_CLOCK,
+  MENU_SET_LOAD,
+  MENU_SET_SAVE,
+  MENU_SET_RESET,
+  MENU_SET_BACK,
+  MAX_MENU_SET_ITEM
+};
 
   static menu_item_t menu_list[] =
   {
@@ -96,7 +96,7 @@ psp_display_screen_settings_menu(void)
   psp_sdl_blit_help();
   
   x      = 10;
-  y      = 5; /* dc 20130702 */
+  y      = 20; /* dc 20130702 */
   y_step = 10;
   
   for (menu_id = 0; menu_id < MAX_MENU_SET_ITEM; menu_id++) {
@@ -160,7 +160,7 @@ psp_display_screen_settings_menu(void)
   }
 
   /* dc 20130702 */
-  // psp_menu_display_save_name();
+  psp_menu_display_save_name();
 }
 
 static void
@@ -380,19 +380,10 @@ psp_settings_menu(void)
       psp_settings_menu_reset();
       end_menu = 1;
     } else
-    if ((new_pad == GP2X_CTRL_LEFT ) || 
-        (new_pad == GP2X_CTRL_RIGHT) ||
-        (new_pad == GP2X_CTRL_CROSS) || 
-        (new_pad == GP2X_CTRL_CIRCLE))
+    if ((new_pad == GP2X_CTRL_LEFT ) || (new_pad == GP2X_CTRL_RIGHT))
     {
-      int step = 0;
-
-      if (new_pad & GP2X_CTRL_RIGHT) {
-        step = 1;
-      } else
-      if (new_pad & GP2X_CTRL_LEFT) {
-        step = -1;
-      }
+      int step = 1;
+      if (new_pad & GP2X_CTRL_LEFT) step = -1;
 
       switch (cur_menu_id ) 
       {
@@ -410,6 +401,12 @@ psp_settings_menu(void)
         break;              
         case MENU_SET_CLOCK      : psp_settings_menu_clock( step );
         break;
+      }
+    } else
+    if ((new_pad == GP2X_CTRL_CROSS) || (new_pad == GP2X_CTRL_CIRCLE))
+    {
+      switch (cur_menu_id ) 
+      {
         case MENU_SET_LOAD       : psp_settings_menu_load(FMGR_FORMAT_SET);
                                    old_pad = new_pad = 0;
         break;              
@@ -418,7 +415,6 @@ psp_settings_menu(void)
         break;                     
         case MENU_SET_RESET      : psp_settings_menu_reset();
         break;                     
-                                   
         case MENU_SET_BACK       : end_menu = 1;
         break;                     
       }
