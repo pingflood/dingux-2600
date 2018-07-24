@@ -1,4 +1,4 @@
-# Welcome to DINGUX-2600
+# Welcome to Dingux 2600
 
 ## The Stella team :
 
@@ -116,12 +116,12 @@ emulator main menu, choose "Load ROM" and then using the file selector
 choose one game file to load in your emulator. Back to the emulator window,
 your game should run automatically.
 
-## COMMENTS
+<!-- ## COMMENTS
 
 You can write your own comments for games using the "Comment" menu.  The first
 line of your comments would then be displayed in the file requester menu while
 selecting the given file name (snapshot, disk, keyboard, settings).
-
+ -->
 
 ## LOADING KEY MAPPING FILES
 
