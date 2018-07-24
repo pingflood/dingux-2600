@@ -15,7 +15,7 @@ SYSROOT     := $(shell $(CC) --print-sysroot)
 
 ATARI_VERSION=1.1.0
 
-TARGET = ./src/dist/dingux-2600.dge
+TARGET = ./dingux-2600/dingux-2600.dge
 SDL_CONFIG = $(SYSROOT)/usr/bin/sdl-config
 OBJS = ./src/gp2x_psp.o \
 ./src/cpudingux.o \
