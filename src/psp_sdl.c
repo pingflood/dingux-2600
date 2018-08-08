@@ -418,16 +418,16 @@ psp_sdl_display_splash()
   psp_sdl_print(x, y, ATARI_VERSION, col);
   psp_sdl_flip();
 
-  psp_sdl_blit_splash();
-  psp_sdl_print(x, y, ATARI_VERSION, col);
-  psp_sdl_flip();
+  // psp_sdl_blit_splash();
+  // psp_sdl_print(x, y, ATARI_VERSION, col);
+  // psp_sdl_flip();
 
 
-  while (index < 50) {
-    gp2xCtrlPeekBufferPositive(&c, 1);
-    if (c.Buttons & (GP2X_CTRL_START|GP2X_CTRL_CROSS)) break;
-    index++;
-  }
+  // while (index < 50) {
+  //   gp2xCtrlPeekBufferPositive(&c, 1);
+  //   if (c.Buttons & (GP2X_CTRL_START|GP2X_CTRL_CROSS)) break;
+  //   index++;
+  // }
 }
 
 void
