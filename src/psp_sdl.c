@@ -412,7 +412,6 @@ psp_sdl_display_splash()
 
   int x = (320 - (strlen(ATARI_VERSION) * 8)) / 2;
   int y = 240 - 16;
-  //int col = psp_sdl_rgb(0xa0, 0xa0, 0xa0);
   int col = psp_sdl_rgb(0x0, 0x0, 0x0);
 
   psp_sdl_blit_splash();

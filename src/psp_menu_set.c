@@ -43,15 +43,17 @@
 extern SDL_Surface *back_surface;
 
 enum{
-  MENU_SET_SOUND,
+  // MENU_SET_RENDER,
+  MENU_SET_SKIP_FPS,
   MENU_SET_VIEW_FPS,
   MENU_SET_SPEED_LIMIT,
-  MENU_SET_SKIP_FPS,
-  MENU_SET_RENDER,
   MENU_SET_FLICKER_MODE,
-  MENU_SET_CLOCK,
+
+  MENU_SET_SOUND,
+  // MENU_SET_CLOCK,
   MENU_SET_LOAD,
   MENU_SET_SAVE,
+
   MENU_SET_RESET,
   MENU_SET_BACK,
   MAX_MENU_SET_ITEM
@@ -59,13 +61,13 @@ enum{
 
   static menu_item_t menu_list[] =
   {
-    { "Sound enable"},
+    // { "Render mode"},
+    { "Frame skip"},
     { "Display FPS"},
     { "Speed limiter"},
-    { "Frame skip"},
-    { "Render mode"},
     { "Flicker mode"},
-    { "Clock frequency"},
+    { "Sound enable"},
+    // { "Clock frequency"},
     { "Load settings" },
     { "Save settings" },
     { "Reset settings" },
@@ -128,12 +130,12 @@ psp_display_screen_settings_menu(void)
       // string_fill_with_space(buffer, 10);
       psp_sdl_back2_print(130, y, buffer, color);
     } else
-    if (menu_id == MENU_SET_RENDER) {
+    // if (menu_id == MENU_SET_RENDER) {
 
-      /* if (atari_render_mode == ATARI_RENDER_NORMAL) */ strcpy(buffer, ": normal");
-      // string_fill_with_space(buffer, 13);
-      psp_sdl_back2_print(130, y, buffer, color);
-    } else
+    //   /* if (atari_render_mode == ATARI_RENDER_NORMAL) */ strcpy(buffer, ": normal");
+    //   // string_fill_with_space(buffer, 13);
+    //   psp_sdl_back2_print(130, y, buffer, color);
+    // } else
     if (menu_id == MENU_SET_FLICKER_MODE) {
 
       if (atari_flicker_mode == ATARI_FLICKER_NONE)     strcpy(buffer, ": none");
@@ -145,14 +147,15 @@ psp_display_screen_settings_menu(void)
 
       // string_fill_with_space(buffer, 13);
       psp_sdl_back2_print(130, y, buffer, color);
-    } else
-    if (menu_id == MENU_SET_CLOCK) {
-      sprintf(buffer,": %d", psp_cpu_clock);
-      // string_fill_with_space(buffer, 4);
-      psp_sdl_back2_print(130, y, buffer, color);
-      y += y_step;
-    } else
-    if (menu_id == MENU_SET_RESET) {
+    }
+     // else
+    // if (menu_id == MENU_SET_CLOCK) {
+    //   sprintf(buffer,": %d", psp_cpu_clock);
+    //   // string_fill_with_space(buffer, 4);
+    //   psp_sdl_back2_print(130, y, buffer, color);
+    //   y += y_step;
+    // } else
+    if (menu_id == MENU_SET_FLICKER_MODE || menu_id == MENU_SET_RESET || menu_id == MENU_SET_SOUND || menu_id == MENU_SET_BACK) {
       y += y_step;
     }
 
@@ -278,24 +281,25 @@ psp_settings_menu_validate(void)
 int
 psp_settings_menu_exit(void)
 {
-  gp2xCtrlData c;
+  // gp2xCtrlData c;
 
-  psp_display_screen_settings_menu();
-  psp_sdl_back2_print(170, 110, "press B to confirm !", PSP_MENU_WARNING_COLOR);
-  psp_sdl_flip();
+  // psp_display_screen_settings_menu();
+  // psp_sdl_back2_print(170, 110, "press B to confirm !", PSP_MENU_WARNING_COLOR);
+  // psp_sdl_flip();
 
-  psp_kbd_wait_no_button();
+  // psp_kbd_wait_no_button();
 
-  do
-  {
-    gp2xCtrlReadBufferPositive(&c, 1);
-    c.Buttons &= PSP_ALL_BUTTON_MASK;
+  // do
+  // {
+  //   gp2xCtrlReadBufferPositive(&c, 1);
+  //   c.Buttons &= PSP_ALL_BUTTON_MASK;
 
-    if (c.Buttons & GP2X_CTRL_CROSS) psp_sdl_exit(0);
+  //   if (c.Buttons & GP2X_CTRL_CROSS) 
+    psp_sdl_exit(0);
 
-  } while (c.Buttons == 0);
+  // } while (c.Buttons == 0);
 
-  psp_kbd_wait_no_button();
+  // psp_kbd_wait_no_button();
 
   return 0;
 }
@@ -397,13 +401,13 @@ psp_settings_menu(void)
         break;              
         case MENU_SET_VIEW_FPS   : atari_view_fps = ! atari_view_fps;
         break;              
-        case MENU_SET_RENDER     : psp_settings_menu_render( step );
-        break;              
-        case MENU_SET_CLOCK      : psp_settings_menu_clock( step );
-        break;
+        // case MENU_SET_RENDER     : psp_settings_menu_render( step );
+        // break;              
+        // case MENU_SET_CLOCK      : psp_settings_menu_clock( step );
+        // break;
       }
     } else
-    if ((new_pad == GP2X_CTRL_CROSS) || (new_pad == GP2X_CTRL_CIRCLE))
+    if ((new_pad == GP2X_CTRL_CIRCLE))
     {
       switch (cur_menu_id ) 
       {
@@ -421,10 +425,8 @@ psp_settings_menu(void)
 
     } else
     if(new_pad & GP2X_CTRL_UP) {
-
       if (cur_menu_id > 0) cur_menu_id--;
       else                 cur_menu_id = MAX_MENU_SET_ITEM-1;
-
     } else
     if(new_pad & GP2X_CTRL_DOWN) {
 
@@ -436,7 +438,7 @@ psp_settings_menu(void)
       /* Cancel */
       end_menu = -1;
     } else 
-    if(new_pad & GP2X_CTRL_SELECT) {
+    if((new_pad & GP2X_CTRL_CROSS) || (new_pad & GP2X_CTRL_SELECT)) {
       /* Back to ATARI */
       end_menu = 1;
     }

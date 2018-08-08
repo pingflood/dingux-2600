@@ -498,7 +498,7 @@ psp_keyboard_menu(void)
           break;
       }
     } else
-    if ((new_pad == GP2X_CTRL_CROSS) || (new_pad == GP2X_CTRL_CIRCLE))    {
+    if ((new_pad == GP2X_CTRL_CIRCLE))    {
         switch (cur_menu_id ) 
         {
           case MENU_KBD_LOAD  : psp_keyboard_menu_load();
@@ -533,7 +533,7 @@ psp_keyboard_menu(void)
       /* Cancel */
       end_menu = -1;
     } else 
-    if(new_pad & GP2X_CTRL_SELECT) {
+    if((new_pad & GP2X_CTRL_CROSS) || (new_pad & GP2X_CTRL_SELECT)) {
       /* Back to Main Menu */
       end_menu = 1;
     } else
