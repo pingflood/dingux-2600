@@ -107,7 +107,7 @@ psp_menu_display_save_name()
   char buffer[128];
   // int Length;
   // snprintf(buffer, 30, "Game: %s", ATARI.atari_save_name);
-  snprintf(buffer, 120, "%s", ATARI.atari_save_name);
+  snprintf(buffer, 50, "%s", ATARI.atari_save_name);
   // Length = strlen(buffer);
   // psp_sdl_back2_print(300 - (6*Length),  5, buffer, PSP_MENU_TEXT2_COLOR);
   psp_sdl_back2_print(10,  5, buffer, PSP_MENU_TEXT2_COLOR);
