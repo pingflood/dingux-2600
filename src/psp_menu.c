@@ -105,11 +105,10 @@ psp_menu_display_save_name()
   // return;
 
   char buffer[128];
-  int Length;
-
+  // int Length;
   // snprintf(buffer, 30, "Game: %s", ATARI.atari_save_name);
-  snprintf(buffer, 30, "%s", ATARI.atari_save_name);
-  Length = strlen(buffer);
+  snprintf(buffer, 120, "%s", ATARI.atari_save_name);
+  // Length = strlen(buffer);
   // psp_sdl_back2_print(300 - (6*Length),  5, buffer, PSP_MENU_TEXT2_COLOR);
   psp_sdl_back2_print(10,  5, buffer, PSP_MENU_TEXT2_COLOR);
 }
@@ -526,14 +525,9 @@ psp_main_menu(void)
     }
     else if ((new_pad == GP2X_CTRL_LEFT ) || (new_pad == GP2X_CTRL_RIGHT))
     {
-      int step = 0;
+      int step = -1;
 
-      if (new_pad & GP2X_CTRL_RIGHT) {
-        step = 1;
-      } else
-      if (new_pad & GP2X_CTRL_LEFT) {
-        step = -1;
-      }
+      if (new_pad & GP2X_CTRL_RIGHT) step = 1;
 
       switch (cur_menu_id ) 
       {
@@ -615,7 +609,6 @@ psp_main_menu(void)
 
     } else
     if(new_pad & GP2X_CTRL_DOWN) {
-
       if (cur_menu_id < (MAX_MENU_ITEM-1)) cur_menu_id++;
       else                                 cur_menu_id = 0;
 
