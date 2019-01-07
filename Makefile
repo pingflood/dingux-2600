@@ -1,132 +1,125 @@
 #
-# Atari 2600 / Stella port on PSP 
+# 2600 port on RS-97
 #
-# Copyright (C) 2009 Ludovic Jacomme (ludovic.jacomme@gmail.com)
+# by pingflood; 2018
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
+
+CHAINPREFIX := /opt/mipsel-linux-uclibc
+CROSS_COMPILE := $(CHAINPREFIX)/usr/bin/mipsel-linux-
+
+CC = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
+STRIP = $(CROSS_COMPILE)strip
+
+SYSROOT     := $(shell $(CC) --print-sysroot)
+
 ATARI_VERSION=1.1.0
 
-TARGET = dingux-2600.dge
-SDL_CONFIG = $(DINGUXDEV)/opt/mipsel-linux-uclibc/usr/bin/sdl-config
-OBJS = gp2x_psp.o \
-cpudingux.o \
-Atari.o  \
-psp_main.o \
-psp_sdl.o \
-psp_kbd.o \
-psp_font.o \
-psp_menu.o \
-psp_joy.o \
-psp_danzeff.o \
-psp_menu_set.o \
-psp_menu_help.o \
-psp_menu_joy.o \
-psp_menu_kbd.o \
-psp_menu_cheat.o \
-psp_menu_list.o \
-psp_editor.o \
-psp_fmgr.o \
+TARGET = ./dingux-2600/dingux-2600.dge
+SDL_CONFIG = $(SYSROOT)/usr/bin/sdl-config
+OBJS = ./src/gp2x_psp.o \
+./src/cpudingux.o \
+./src/Atari.o  \
+./src/psp_main.o \
+./src/psp_sdl.o \
+./src/psp_kbd.o \
+./src/psp_font.o \
+./src/psp_menu.o \
+./src/psp_joy.o \
+./src/psp_danzeff.o \
+./src/psp_menu_set.o \
+./src/psp_menu_help.o \
+./src/psp_menu_joy.o \
+./src/psp_menu_kbd.o \
+./src/psp_menu_cheat.o \
+./src/psp_menu_list.o \
+./src/psp_editor.o \
+./src/psp_fmgr.o \
 \
-emucore/Joystick.o \
-emucore/TIA.o \
-emucore/Settings.o \
-emucore/CartE0.o \
-emucore/Paddles.o \
-emucore/CartF8.o \
-emucore/Props.o \
-emucore/Switches.o \
-emucore/Event.o \
-emucore/Random.o \
-emucore/Device.o \
-emucore/Driving.o \
-emucore/Cart2K.o \
-emucore/Keyboard.o \
-emucore/Console.o \
-emucore/CartF6.o \
-emucore/M6532.o \
-emucore/PropsSet.o \
-emucore/CartUA.o \
-emucore/CartMC.o \
-emucore/CartFE.o \
-emucore/CartMB.o \
-emucore/CartF8SC.o \
-emucore/CartF6SC.o \
-emucore/Cart.o \
-emucore/CartF4SC.o \
-emucore/CartF4.o \
-emucore/CartE7.o \
-emucore/CartCV.o \
-emucore/FSNode.o \
-emucore/FrameBuffer.o \
-emucore/MD5.o \
-emucore/MediaSrc.o \
-emucore/MediaFactory.o \
-emucore/CartAR.o \
-emucore/CartFASC.o \
-emucore/Cart4K.o \
-emucore/Control.o \
-emucore/Cart3F.o \
-emucore/Cart3E.o \
-emucore/Booster.o \
-emucore/CartDPC.o \
-emucore/Deserializer.o \
-emucore/EventHandler.o \
-emucore/EventStreamer.o \
-emucore/Serializer.o \
-emucore/M6502.o \
-emucore/M6502Hi.o \
-emucore/M6502Low.o \
-emucore/NullDev.o \
-emucore/System.o \
-emucore/OSystem.o \
+./src/emucore/Joystick.o \
+./src/emucore/TIA.o \
+./src/emucore/Settings.o \
+./src/emucore/CartE0.o \
+./src/emucore/Paddles.o \
+./src/emucore/CartF8.o \
+./src/emucore/Props.o \
+./src/emucore/Switches.o \
+./src/emucore/Event.o \
+./src/emucore/Random.o \
+./src/emucore/Device.o \
+./src/emucore/Driving.o \
+./src/emucore/Cart2K.o \
+./src/emucore/Keyboard.o \
+./src/emucore/Console.o \
+./src/emucore/CartF6.o \
+./src/emucore/M6532.o \
+./src/emucore/PropsSet.o \
+./src/emucore/CartUA.o \
+./src/emucore/CartMC.o \
+./src/emucore/CartFE.o \
+./src/emucore/CartMB.o \
+./src/emucore/CartF8SC.o \
+./src/emucore/CartF6SC.o \
+./src/emucore/Cart.o \
+./src/emucore/CartF4SC.o \
+./src/emucore/CartF4.o \
+./src/emucore/CartE7.o \
+./src/emucore/CartCV.o \
+./src/emucore/FSNode.o \
+./src/emucore/FrameBuffer.o \
+./src/emucore/MD5.o \
+./src/emucore/MediaSrc.o \
+./src/emucore/MediaFactory.o \
+./src/emucore/CartAR.o \
+./src/emucore/CartFASC.o \
+./src/emucore/Cart4K.o \
+./src/emucore/Control.o \
+./src/emucore/Cart3F.o \
+./src/emucore/Cart3E.o \
+./src/emucore/Booster.o \
+./src/emucore/CartDPC.o \
+./src/emucore/Deserializer.o \
+./src/emucore/EventHandler.o \
+./src/emucore/EventStreamer.o \
+./src/emucore/Serializer.o \
+./src/emucore/M6502.o \
+./src/emucore/M6502Hi.o \
+./src/emucore/M6502Low.o \
+./src/emucore/NullDev.o \
+./src/emucore/System.o \
+./src/emucore/OSystem.o \
 \
-emucore/unzip.o \
-emucore/TIASnd.o \
+./src/emucore/unzip.o \
+./src/emucore/TIASnd.o \
 \
-common/FrameBufferSoft.o \
-common/mainSDL.o \
-common/SoundSDL.o \
+./src/common/FrameBufferSoft.o \
+./src/common/mainSDL.o \
+./src/common/SoundSDL.o \
 \
-psp/OSystemPSP.o \
-psp/SettingsPSP.o \
-psp/FSNodePSP.o \
-
-
-CC=/opt/mipsel-linux-uclibc/usr/bin/mipsel-linux-gcc
-CXX=/opt/mipsel-linux-uclibc/usr/bin/mipsel-linux-g++
-STRIP=/opt/mipsel-linux-uclibc/usr/bin/mipsel-linux-strip
+./src/psp/OSystemPSP.o \
+./src/psp/SettingsPSP.o \
+./src/psp/FSNodePSP.o \
 
 DEFAULT_CFLAGS = $(shell $(SDL_CONFIG) --cflags)
 
-MORE_CFLAGS = \
--I. -I$(DINGUXDEV)/opt/mipsel-linux-uclibc/usr/include \
- -DMPU_JZ4740 -mips32 \
- -Iemucore -Icommon -Ipsp -DPSP -DBSPF_PSP -DSOUND_SUPPORT \
- -O3 -fsigned-char -ffast-math -fomit-frame-pointer -fno-strength-reduce \
- -DNO_STDIO_REDIRECT -DDINGUX_MODE  \
- -DATARI_VERSION=\"$(ATARI_VERSION)\"
+MORE_CFLAGS = -DNARROW -DSOUND -DBPP16 -DSDL -DLSB_FIRST
+MORE_CFLAGS += -I. -I$(SYSROOT)/usr/include  -I$(SYSROOT)/usr/lib  -I$(SYSROOT)/lib
+MORE_CFLAGS += -DMPU_JZ4740
+MORE_CFLAGS += -I./src -I./src/emucore -I./src/common -I./src/psp -DPSP -DBSPF_PSP -DSOUND_SUPPORT
+MORE_CFLAGS += -fsigned-char -ffast-math -fomit-frame-pointer -fno-strength-reduce
+MORE_CFLAGS += -DATARI_VERSION=\"$(ATARI_VERSION)\"
+MORE_CFLAGS += -DDINGUX_MODE -mips32 -O3
+#MORE_CFLAGS += -g -DNO_STDIO_REDIRECT
+MORE_CFLAGS += -O2 -fomit-frame-pointer -ffunction-sections -ffast-math -fsingle-precision-constant # -G0
+
+LDFLAGS =  -s -lm -lz `$(SDL_CONFIG) --libs`
+LDFLAGS     += -Wl,--gc-sections
+
+LIBS += -B$(SYSROOT)/lib
+LIBS += -lSDL_image -lpng
+LIBS += -lpthread  -ldl -lstdc++
 
 CFLAGS = $(DEFAULT_CFLAGS) $(MORE_CFLAGS) 
-LDFLAGS = -static -s
-
-LIBS += -L/opt/mipsel-linux-uclibc/usr/lib \
-/opt/mipsel-linux-uclibc/usr/lib/libSDL_image.a \
-/opt/mipsel-linux-uclibc/usr/lib/libSDL.a \
--lpng -lz -lm -lpthread -lstdc++ -ldl
-
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -136,13 +129,26 @@ LIBS += -L/opt/mipsel-linux-uclibc/usr/lib \
 
 $(TARGET): $(OBJS)
 	$(CC) $(LDFLAGS) $(CFLAGS) $(OBJS) $(LIBS) -o $(TARGET) && $(STRIP) $(TARGET)
+	md5sum $(TARGET)
 
-install: $(TARGET)
-	cp $< /media/dingux/local/emulators/dingux-2600/
+ipk: $(TARGET)
+	@rm -rf /tmp/.dingux-2600-ipk/ && mkdir -p /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600 /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/systems
+	@cp -r dingux-2600/default.bin dingux-2600/dingux-2600.dge dingux-2600/dingux-2600.man.txt dingux-2600/dingux-2600.png dingux-2600/splash.png dingux-2600/graphics /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600
+	@cd /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600 && mkdir cht joy kbd roms save scr set state txt
+	@cp dingux-2600/dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators
+	@cp dingux-2600/atari2600.dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/systems
+	@sed "s/^Version:.*/Version: $$(date +%Y%m%d)/" dingux-2600/control > /tmp/.dingux-2600-ipk/control
+	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/control.tar.gz -C /tmp/.dingux-2600-ipk/ control
+	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/data.tar.gz -C /tmp/.dingux-2600-ipk/root/ .
+	@echo 2.0 > /tmp/.dingux-2600-ipk/debian-binary
+	@ar r dingux-2600/dingux-2600.ipk /tmp/.dingux-2600-ipk/control.tar.gz /tmp/.dingux-2600-ipk/data.tar.gz /tmp/.dingux-2600-ipk/debian-binary
+
+# install: $(TARGET)
+# 	cp $< /media/dingux/local/emulators/dingux-2600/
 
 clean:
 	rm -f $(OBJS) $(TARGET)
-	rm -f dingux-2600.dge
+	# rm -f dingux-2600
 
 ctags: 
-	ctags *[ch] emucore/*[chp] common/*[chp]
+	ctags ./src/*[ch] ./src/emucore/*[chp] ./src/common/*[chp]
