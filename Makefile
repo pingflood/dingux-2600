@@ -147,8 +147,7 @@ ipk: $(TARGET)
 # 	cp $< /media/dingux/local/emulators/dingux-2600/
 
 clean:
-	rm -f $(OBJS) $(TARGET)
-	# rm -f dingux-2600
+	rm -f $(OBJS) $(TARGET) ./dingux-2600/dingux-2600.ipk
 
 ctags: 
 	ctags ./src/*[ch] ./src/emucore/*[chp] ./src/common/*[chp]
