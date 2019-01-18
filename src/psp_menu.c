@@ -453,10 +453,9 @@ psp_main_menu_exit(void)
   //   c.Buttons &= PSP_ALL_BUTTON_MASK;
 
   //   if (c.Buttons & GP2X_CTRL_CROSS) {
-      psp_sdl_clear_screen(0);
-      psp_sdl_flip();
-      psp_sdl_clear_screen(0);
-      psp_sdl_flip();
+      psp_sdl_clear_screen(0); psp_sdl_flip();
+      psp_sdl_clear_screen(0); psp_sdl_flip();
+      psp_sdl_clear_screen(0); psp_sdl_flip();
       psp_sdl_exit(0);
   //   }
 
@@ -625,10 +624,9 @@ psp_main_menu(void)
  
   psp_kbd_wait_no_button();
 
-  psp_sdl_clear_screen( PSP_MENU_BLACK_COLOR );
-  psp_sdl_flip();
-  psp_sdl_clear_screen( PSP_MENU_BLACK_COLOR );
-  psp_sdl_flip();
+  psp_sdl_clear_screen( PSP_MENU_BLACK_COLOR ); psp_sdl_flip();
+  psp_sdl_clear_screen( PSP_MENU_BLACK_COLOR ); psp_sdl_flip();
+  psp_sdl_clear_screen( PSP_MENU_BLACK_COLOR ); psp_sdl_flip();
 
   psp_sdl_clear_blit(0);
 
