@@ -38,6 +38,7 @@
 #include "psp_menu.h"
 #include "psp_fmgr.h"
 #include "psp_menu_kbd.h"
+#include "psp_menu_joy.h"
 #include "psp_menu_set.h"
 
 extern SDL_Surface *back_surface;
@@ -51,11 +52,15 @@ enum{
 
   MENU_SET_SOUND,
   // MENU_SET_CLOCK,
+
+  MENU_KEYBOARD,
+  MENU_JOYSTICK,
+
   MENU_SET_LOAD,
   MENU_SET_SAVE,
 
   MENU_SET_RESET,
-  MENU_SET_BACK,
+  // MENU_SET_BACK,
   MAX_MENU_SET_ITEM
 };
 
@@ -68,13 +73,16 @@ enum{
     { "Flicker mode"},
     { "Sound enable"},
     // { "Clock frequency"},
+    { "Keyboard" }, 
+    { "Joystick" },
+
     { "Load settings" },
     { "Save settings" },
     { "Reset settings" },
-    { "Back to Menu" }
+    // { "Back to Menu" }
   };
 
-  static int cur_menu_id = MENU_SET_BACK;
+  static int cur_menu_id = MENU_SET_SKIP_FPS;
 
   static int atari_snd_enable     = 0;
   static int atari_render_mode    = 0;
@@ -83,7 +91,6 @@ enum{
   static int atari_speed_limiter  = 60;
   static int psp_cpu_clock        = GP2X_DEF_EMU_CLOCK;
   static int atari_skip_fps       = 0;
-
 
 static void 
 psp_display_screen_settings_menu(void)
@@ -155,7 +162,7 @@ psp_display_screen_settings_menu(void)
     //   psp_sdl_back2_print(130, y, buffer, color);
     //   y += y_step;
     // } else
-    if (menu_id == MENU_SET_FLICKER_MODE || menu_id == MENU_SET_RESET || menu_id == MENU_SET_SOUND || menu_id == MENU_SET_BACK) {
+    if (menu_id == MENU_SET_FLICKER_MODE || menu_id == MENU_SET_RESET || menu_id == MENU_SET_SOUND /*|| menu_id == MENU_SET_BACK*/) {
       y += y_step;
     }
 
@@ -346,8 +353,8 @@ int
 psp_settings_menu(void)
 {
   gp2xCtrlData c;
-  long        new_pad;
   long        old_pad;
+  long        new_pad;
   int         last_time;
   int         end_menu;
 
@@ -392,7 +399,13 @@ psp_settings_menu(void)
       switch (cur_menu_id ) 
       {
         case MENU_SET_SOUND      : atari_snd_enable = ! atari_snd_enable;
-        break;              
+        break;
+        case MENU_KEYBOARD   : psp_keyboard_menu();
+                               old_pad = new_pad = 0;
+        break;
+        case MENU_JOYSTICK   : psp_joystick_menu();
+                               old_pad = new_pad = 0;
+        break;
         case MENU_SET_SPEED_LIMIT : psp_settings_menu_limiter( step );
         break;              
         case MENU_SET_SKIP_FPS   : psp_settings_menu_skip_fps( step );
@@ -413,14 +426,14 @@ psp_settings_menu(void)
       {
         case MENU_SET_LOAD       : psp_settings_menu_load(FMGR_FORMAT_SET);
                                    old_pad = new_pad = 0;
-        break;              
+        break;
         case MENU_SET_SAVE       : psp_settings_menu_save();
                                    old_pad = new_pad = 0;
-        break;                     
+        break;
         case MENU_SET_RESET      : psp_settings_menu_reset();
-        break;                     
-        case MENU_SET_BACK       : end_menu = 1;
-        break;                     
+        break;
+        // case MENU_SET_BACK       : end_menu = 1;
+        // break;
       }
 
     } else

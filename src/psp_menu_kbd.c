@@ -60,7 +60,7 @@ enum {
   MENU_KBD_SAVE,
   MENU_KBD_HOTKEYS,
   MENU_KBD_RESET,
-  MENU_KBD_BACK,
+  // MENU_KBD_BACK,
   MAX_MENU_KBD_ITEM
 };
 
@@ -96,10 +96,10 @@ enum {
    { "Save Keyboard" },
    { "Set Hotkeys" },
    { "Reset Keyboard" },
-   { "Back to Menu" }
+   // { "Back to Menu" }
   };
 
-  static int cur_menu_id = MENU_KBD_BACK;
+  static int cur_menu_id = 0;
 
   static int loc_kbd_mapping[ KBD_ALL_BUTTONS ];
   static int loc_kbd_mapping_L[ KBD_ALL_BUTTONS ];
@@ -512,8 +512,8 @@ psp_keyboard_menu(void)
           case MENU_KBD_RESET : psp_keyboard_menu_reset_kbd();
           break;
  
-          case MENU_KBD_BACK  : end_menu = 1;
-          break;
+          // case MENU_KBD_BACK  : end_menu = 1;
+          // break;
         }
 
     } else
