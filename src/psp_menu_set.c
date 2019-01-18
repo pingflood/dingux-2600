@@ -155,14 +155,7 @@ psp_display_screen_settings_menu(void)
       // string_fill_with_space(buffer, 13);
       psp_sdl_back2_print(130, y, buffer, color);
     }
-     // else
-    // if (menu_id == MENU_SET_CLOCK) {
-    //   sprintf(buffer,": %d", psp_cpu_clock);
-    //   // string_fill_with_space(buffer, 4);
-    //   psp_sdl_back2_print(130, y, buffer, color);
-    //   y += y_step;
-    // } else
-    if (menu_id == MENU_SET_FLICKER_MODE || menu_id == MENU_SET_RESET || menu_id == MENU_JOYSTICK /*|| menu_id == MENU_SET_BACK*/) {
+    if (menu_id == MENU_SET_SOUND || menu_id == MENU_SET_RESET || menu_id == MENU_JOYSTICK /*|| menu_id == MENU_SET_BACK*/) {
       y += y_step;
     }
 
@@ -400,12 +393,6 @@ psp_settings_menu(void)
       {
         case MENU_SET_SOUND      : atari_snd_enable = ! atari_snd_enable;
         break;
-        case MENU_KEYBOARD   : psp_keyboard_menu();
-                               old_pad = new_pad = 0;
-        break;
-        case MENU_JOYSTICK   : psp_joystick_menu();
-                               old_pad = new_pad = 0;
-        break;
         case MENU_SET_SPEED_LIMIT : psp_settings_menu_limiter( step );
         break;              
         case MENU_SET_SKIP_FPS   : psp_settings_menu_skip_fps( step );
@@ -424,6 +411,12 @@ psp_settings_menu(void)
     {
       switch (cur_menu_id ) 
       {
+        case MENU_KEYBOARD   : psp_keyboard_menu();
+                               old_pad = new_pad = 0;
+        break;
+        case MENU_JOYSTICK   : psp_joystick_menu();
+                               old_pad = new_pad = 0;
+        break;
         case MENU_SET_LOAD       : psp_settings_menu_load(FMGR_FORMAT_SET);
                                    old_pad = new_pad = 0;
         break;

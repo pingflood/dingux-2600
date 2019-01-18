@@ -4,4 +4,5 @@
 /src/psp/*.o
 /dingux-2600/dingux-2600.dge
 /dingux-2600/roms/*
+/dingux-2600/save/*
 *.ipk

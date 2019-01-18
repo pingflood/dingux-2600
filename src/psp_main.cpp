@@ -70,37 +70,6 @@ static void cleanup_output(void)
 int 
 main(int argc, char *argv[])
 {
-
-printf("SDLK_KP8: %d\n", SDLK_KP8);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-printf("SDLK_UP: %d\n", SDLK_UP);
-
   cpu_init();
 
 #ifndef NO_STDIO_REDIRECT
