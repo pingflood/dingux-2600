@@ -162,7 +162,7 @@ psp_display_screen_settings_menu(void)
     //   psp_sdl_back2_print(130, y, buffer, color);
     //   y += y_step;
     // } else
-    if (menu_id == MENU_SET_FLICKER_MODE || menu_id == MENU_SET_RESET || menu_id == MENU_SET_SOUND /*|| menu_id == MENU_SET_BACK*/) {
+    if (menu_id == MENU_SET_FLICKER_MODE || menu_id == MENU_SET_RESET || menu_id == MENU_JOYSTICK /*|| menu_id == MENU_SET_BACK*/) {
       y += y_step;
     }
 

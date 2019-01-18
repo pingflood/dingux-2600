@@ -81,7 +81,7 @@ typedef struct gp2xCtrlData SceCtrlData;
 
 #elif defined(DINGUX_MODE)
 
-# if 0 // original mapping
+#if 0 // original mapping
 #define GP2X_UP              (103)
 #define GP2X_DOWN            (108)
 #define GP2X_LEFT            (105)
@@ -102,7 +102,7 @@ typedef struct gp2xCtrlData SceCtrlData;
 #define GP2X_SELECT          (1)
 #define GP2X_VOLUP           (-6)
 #define GP2X_VOLDOWN         (-7)
-# endif
+// # endif
 
 #define GP2X_UP              (103)
 #define GP2X_DOWN            (108)
@@ -126,37 +126,62 @@ typedef struct gp2xCtrlData SceCtrlData;
 #define GP2X_VOLUP           (-6)
 #define GP2X_VOLDOWN         (-7)
 
+#endif
+#define GP2X_UP             SDLK_UP
+#define GP2X_DOWN           SDLK_DOWN
+#define GP2X_LEFT           SDLK_LEFT
+#define GP2X_RIGHT          SDLK_RIGHT
+#define GP2X_A              SDLK_LCTRL
+#define GP2X_B              SDLK_LALT
+#define GP2X_X              SDLK_SPACE
+#define GP2X_Y              SDLK_LSHIFT
+#define GP2X_L              SDLK_TAB
+#define GP2X_R              SDLK_BACKSPACE
+// #define GP2X_FIRE           SDLK_SPACE
+#define GP2X_START          SDLK_RETURN
+#define GP2X_SELECT         SDLK_ESCAPE
+
+  // X          MODIFIER       SDLK_SPACE      32        !(mem[PEPIN] >> 07 & 0b1)
+  // A          CONFIRM        SDLK_LCTRL      306       !(mem[PDPIN] >> 22 & 0b1)
+  // B          CANCEL         SDLK_LALT       308       !(mem[PDPIN] >> 23 & 0b1)
+  // Y          MANUAL         SDLK_LSHIFT     304       !(mem[PEPIN] >> 11 & 0b1)
+  // L          SECTION_PREV   SDLK_TAB        9         !(mem[PBPIN] >> 23 & 0b1)
+  // R          SECTION_NEXT   SDLK_BACKSPACE  8         !(mem[PDPIN] >> 24 & 0b1)
+  // START      SETTINGS       SDLK_RETURN     13         (mem[PDPIN] >> 18 & 0b1)
+  // SELECT     MENU           SDLK_ESCAPE     27         (mem[PDPIN] >> 17 & 0b1)
+  // BACKLIGHT  BACKLIGHT      SDLK_3          51        !(mem[PDPIN] >> 21 & 0b1)
+  // POWER      POWER          SDLK_END        279       !(mem[PAPIN] >> 30 & 0b1)
+
 #else
 
 //some keys of the keyboard to emulate gp2x
 
+#define GP2X_UP             SDLK_UP //80 //SDLK_KP8
+#define GP2X_DOWN           SDLK_DOWN // 88 //SDLK_KP2
+#define GP2X_LEFT           SDLK_LEFT // 83 //SDLK_KP4
+#define GP2X_RIGHT          SDLK_RIGHT //85 //SDLK_KP6
+
 #define GP2X_UPLEFT         79 //SDLK_KP7
-#define GP2X_UP             80 //SDLK_KP8
 #define GP2X_UPRIGHT        81 //SDLK_KP9
-
-#define GP2X_LEFT           83 //SDLK_KP4
-#define GP2X_RIGHT          85 //SDLK_KP6
-
 #define GP2X_DOWNLEFT       87 //SDLK_KP1
-#define GP2X_DOWN           88 //SDLK_KP2
 #define GP2X_DOWNRIGHT      89 //SDLK_KP3
 
-# if 0
+#if 0
 #define GP2X_A              38 //SDLK_a
 #define GP2X_B              56 //SDLK_b
 #define GP2X_X              53 //SDLK_x
 #define GP2X_Y              29 //SDLK_y
 # else
-#define GP2X_A              38 //SDLK_a
-#define GP2X_B              40 //SDLK_d
-#define GP2X_X              53 //SDLK_x
-#define GP2X_Y              25 //SDLK_w
+#define GP2X_A              SDLK_x //38 //SDLK_a
+#define GP2X_B              SDLK_z //40 //SDLK_d
+#define GP2X_X              SDLK_s //53 //SDLK_x
+#define GP2X_Y              SDLK_a //25 //SDLK_w
 # endif
-#define GP2X_L              46 //SDLK_l
-#define GP2X_R              27 //SDLK_r
-#define GP2X_FIRE           65 //SDLK_SPACE
-#define GP2X_START          36 //SDLK_RETURN
-#define GP2X_SELECT         39  //SDLK_s
+#define GP2X_L              SDLK_d //46 //SDLK_l
+#define GP2X_R              SDLK_c //27 //SDLK_r
+#define GP2X_FIRE           SDLK_SPACE //65 //SDLK_SPACE
+#define GP2X_START          SDLK_RETURN //36 //SDLK_RETURN
+#define GP2X_SELECT         SDLK_RSHIFT //39  //SDLK_s
 #define GP2X_VOLUP         86     //SDLK_KP_PLUS
 #define GP2X_VOLDOWN       82    //SDLK_KP_MINUS
 
