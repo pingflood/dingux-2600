@@ -126,31 +126,38 @@ typedef struct gp2xCtrlData SceCtrlData;
 #define GP2X_VOLUP           (-6)
 #define GP2X_VOLDOWN         (-7)
 
+//  Y
+// A B
+//  X
 #endif
+#define RG_A              SDLK_LCTRL
+#define RG_B              SDLK_LALT
+#define RG_X              SDLK_SPACE
+#define RG_Y              SDLK_LSHIFT
+#define RG_L              SDLK_TAB
+#define RG_R              SDLK_BACKSPACE
+#define RG_POWER          SDLK_END
+#define RG_BACKLIGHT      SDLK_3
+
 #define GP2X_UP             SDLK_UP
 #define GP2X_DOWN           SDLK_DOWN
 #define GP2X_LEFT           SDLK_LEFT
 #define GP2X_RIGHT          SDLK_RIGHT
-#define GP2X_A              SDLK_LCTRL
-#define GP2X_B              SDLK_LALT
-#define GP2X_X              SDLK_SPACE
-#define GP2X_Y              SDLK_LSHIFT
+#define GP2X_A              RG_Y
+#define GP2X_B              RG_A
+#define GP2X_X              RG_B
+#define GP2X_Y              RG_X
 #define GP2X_L              SDLK_TAB
 #define GP2X_R              SDLK_BACKSPACE
-// #define GP2X_FIRE           SDLK_SPACE
 #define GP2X_START          SDLK_RETURN
 #define GP2X_SELECT         SDLK_ESCAPE
-
-  // X          MODIFIER       SDLK_SPACE      32        !(mem[PEPIN] >> 07 & 0b1)
-  // A          CONFIRM        SDLK_LCTRL      306       !(mem[PDPIN] >> 22 & 0b1)
-  // B          CANCEL         SDLK_LALT       308       !(mem[PDPIN] >> 23 & 0b1)
-  // Y          MANUAL         SDLK_LSHIFT     304       !(mem[PEPIN] >> 11 & 0b1)
-  // L          SECTION_PREV   SDLK_TAB        9         !(mem[PBPIN] >> 23 & 0b1)
-  // R          SECTION_NEXT   SDLK_BACKSPACE  8         !(mem[PDPIN] >> 24 & 0b1)
-  // START      SETTINGS       SDLK_RETURN     13         (mem[PDPIN] >> 18 & 0b1)
-  // SELECT     MENU           SDLK_ESCAPE     27         (mem[PDPIN] >> 17 & 0b1)
-  // BACKLIGHT  BACKLIGHT      SDLK_3          51        !(mem[PDPIN] >> 21 & 0b1)
-  // POWER      POWER          SDLK_END        279       !(mem[PAPIN] >> 30 & 0b1)
+#define GP2X_UPLEFT          (-1)
+#define GP2X_UPRIGHT         (-2)
+#define GP2X_DOWNLEFT        (-3)
+#define GP2X_DOWNRIGHT       (-4)
+#define GP2X_FIRE            (-5)
+#define GP2X_VOLUP           (-6)
+#define GP2X_VOLDOWN         (-7)
 
 #else
 
