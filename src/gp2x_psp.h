@@ -126,10 +126,10 @@ typedef struct gp2xCtrlData SceCtrlData;
 #define GP2X_VOLUP           (-6)
 #define GP2X_VOLDOWN         (-7)
 
+#endif
 //  Y
 // A B
 //  X
-#endif
 #define RG_A              SDLK_LCTRL
 #define RG_B              SDLK_LALT
 #define RG_X              SDLK_SPACE
