@@ -19,12 +19,8 @@
 #
 ATARI_VERSION=1.1.0
 
-TARGET = dingux-2600
-#SDL_CONFIG = /opendingux-toolchain/usr/bin/sdl-config
-SDL_CFLAGS = `/opendingux-toolchain/usr/bin/sdl-config --cflags`
-SDL_LIBS = `/opendingux-toolchain/usr/bin/sdl-config --libs`
-
-
+TARGET = dingux-2600.dge
+SDL_CONFIG = sdl-config
 OBJS = gp2x_psp.o \
 cpudingux.o \
 Atari.o  \
@@ -108,19 +104,15 @@ psp/OSystemPSP.o \
 psp/SettingsPSP.o \
 psp/FSNodePSP.o \
 
+ARCH=mipsel-linux
+CC=$(ARCH)-gcc
+CXX=$(ARCH)-g++
+STRIP=$(ARCH)-strip
 
-CC=/opendingux-toolchain/usr/bin/mipsel-linux-gcc
-CXX=/opendingux-toolchain/usr/bin/mipsel-linux-g++
-STRIP=/opendingux-toolchain/usr/bin/mipsel-linux-strip
-
-#DEFAULT_CFLAGS = $(shell $(SDL_CONFIG) --cflags)
-DEFAULT_CFLAGS = $(SDL_CFLAGS)
-
-
-#-I/opendingux-toolchain/usr/include/SDL \
+DEFAULT_CFLAGS = $(shell $(SDL_CONFIG) --cflags)
 
 MORE_CFLAGS = \
--I. -I/opendingux-toolchain/usr/include \
+ -I.  \
  -DMPU_JZ4740 -mips32 \
  -Iemucore -Icommon -Ipsp -DPSP -DBSPF_PSP -DSOUND_SUPPORT \
  -O3 -fsigned-char -ffast-math -fomit-frame-pointer -fno-strength-reduce \
@@ -128,20 +120,11 @@ MORE_CFLAGS = \
  -DATARI_VERSION=\"$(ATARI_VERSION)\"
 
 CFLAGS = $(DEFAULT_CFLAGS) $(MORE_CFLAGS) 
-LDFLAGS = -static -s
-
-LIBS = $(SDL_LIBS)
-
-LIBS += -L/opendingux-toolchain/usr/lib \
--B/opendingux-toolchain/usr/lib \
-/opt/mipsel-linux-uclibc/usr/lib/libSDL_image.a \
-/opt/mipsel-linux-uclibc/usr/lib/libSDL.a \
--lpng -lz -lm -lpthread -lstdc++ -ldl
+LFLAGS = $(shell sdl-config --libs) -Wall -lSDL_image -lpng -lz -lm -lstdc++ -ldl
+LDFLAGS = -s
+LIBS += $(LFLAGS)
 
 
-
-#SDL_CFLAGS = `/opendingux-toolchain/usr/bin/sdl-config --cflags`
-#SDL_LIBS = `/opendingux-toolchain/usr/bin/sdl-config --libs`
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -157,6 +140,7 @@ install: $(TARGET)
 
 clean:
 	rm -f $(OBJS) $(TARGET)
+	rm -f dingux-2600.dge
 
 ctags: 
 	ctags *[ch] emucore/*[chp] common/*[chp]

@@ -1,0 +1,10 @@
+Package: dingux-2600
+Version: 20190203
+Description: Atari 2600 (VCS) emualator
+Section: emus
+Priority: optional
+Maintainer: jbanes
+Architecture: mipsel
+Homepage: http://stella.sourceforge.net/
+Depends:
+Source: https://github.com/jbanes/dingux-2600

@@ -1,6 +1,6 @@
-/src/*.o
-/src/emucore/*.o
-/src/common/*.o
-/src/psp/*.o
-/dingux-2600/dingux-2600.dge
-/dingux-2600/roms/*
+**/.DS_Store
+**/*.o
+**/dingux-2600.dge
+dingux-2600/roms/*
+*.ipk
+nbproject/**

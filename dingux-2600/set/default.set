@@ -1,7 +1,0 @@
-psp_cpu_clock=400
-psp_skip_max_frame=0
-atari_view_fps=0
-atari_snd_enable=1
-atari_render_mode=0
-atari_flicker_mode=0
-atari_speed_limiter=60
