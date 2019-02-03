@@ -1,0 +1,16 @@
+#!/bin/sh
+
+mkdir -p ipkg/home/retrofw/emus/dingux-2600
+cp src/dingux-2600.dge ipkg/home/retrofw/emus/dingux-2600/dingux-2600.dge
+cp -R dingux-2600/* ipkg/home/retrofw/emus/dingux-2600/
+
+cd ipkg
+
+tar -czvf control.tar.gz control
+tar -czvf data.tar.gz home
+ar rv ../dingux-2600.ipk control.tar.gz data.tar.gz debian-binary
+
+cd ..
+rm -R ipkg/home/retrofw/emus/dingux-2600/
+rm ipkg/control.tar.gz
+rm ipkg/data.tar.gz
