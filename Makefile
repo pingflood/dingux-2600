@@ -138,6 +138,7 @@ ipk: $(TARGET)
 	@cp dingux-2600/dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators
 	@cp dingux-2600/atari2600.dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/systems
 	@sed "s/^Version:.*/Version: $$(date +%Y%m%d)/" dingux-2600/control > /tmp/.dingux-2600-ipk/control
+	@cp dingux-2600/conffiles /tmp/.dingux-2600-ipk/
 	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/control.tar.gz -C /tmp/.dingux-2600-ipk/ control
 	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/data.tar.gz -C /tmp/.dingux-2600-ipk/root/ .
 	@echo 2.0 > /tmp/.dingux-2600-ipk/debian-binary
