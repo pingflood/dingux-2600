@@ -132,14 +132,14 @@ $(TARGET): $(OBJS)
 	md5sum $(TARGET)
 
 ipk: $(TARGET)
-	@rm -rf /tmp/.dingux-2600-ipk/ && mkdir -p /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600 /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/systems
+	@rm -rf /tmp/.dingux-2600-ipk/ && mkdir -p /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600 /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems
 	@cp -r dingux-2600/default.bin dingux-2600/dingux-2600.dge dingux-2600/dingux-2600.man.txt dingux-2600/dingux-2600.png dingux-2600/splash.png dingux-2600/graphics /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600
 	@cd /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600 && mkdir cht joy kbd roms save scr set state txt
 	@cp dingux-2600/dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators
-	@cp dingux-2600/atari2600.dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/systems
+	@cp dingux-2600/atari2600.dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems
 	@sed "s/^Version:.*/Version: $$(date +%Y%m%d)/" dingux-2600/control > /tmp/.dingux-2600-ipk/control
 	@cp dingux-2600/conffiles /tmp/.dingux-2600-ipk/
-	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/control.tar.gz -C /tmp/.dingux-2600-ipk/ control
+	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/control.tar.gz -C /tmp/.dingux-2600-ipk/ control conffiles
 	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/data.tar.gz -C /tmp/.dingux-2600-ipk/root/ .
 	@echo 2.0 > /tmp/.dingux-2600-ipk/debian-binary
 	@ar r dingux-2600/dingux-2600.ipk /tmp/.dingux-2600-ipk/control.tar.gz /tmp/.dingux-2600-ipk/data.tar.gz /tmp/.dingux-2600-ipk/debian-binary
