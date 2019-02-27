@@ -1055,17 +1055,17 @@ psp_global_initialize()
 {
   memset(&ATARI, 0, sizeof(Atari_t));
 
-  static char home_dir[MAX_PATH];
-  snprintf(ATARI.atari_home_dir, sizeof(ATARI.atari_home_dir), "%s/.dingux-2600", getenv("HOME")); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/cht",   ATARI.atari_home_dir); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/joy",   ATARI.atari_home_dir); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/kbd",   ATARI.atari_home_dir); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/roms",  ATARI.atari_home_dir); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/save",  ATARI.atari_home_dir); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/scr",   ATARI.atari_home_dir); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/set",   ATARI.atari_home_dir); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/state", ATARI.atari_home_dir); mkdir(home_dir, 0777);
-  snprintf(home_dir, MAX_PATH, "%s/txt",   ATARI.atari_home_dir); mkdir(home_dir, 0777);
+  static char cfg_dir[MAX_PATH];
+  snprintf(ATARI.atari_home_dir, sizeof(ATARI.atari_home_dir), "%s/.dingux-2600", getenv("HOME")); mkdir(ATARI.atari_home_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/cht",   ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/joy",   ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/kbd",   ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/roms",  ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/save",  ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/scr",   ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/set",   ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/state", ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
+  snprintf(cfg_dir, MAX_PATH, "%s/txt",   ATARI.atari_home_dir); mkdir(cfg_dir, 0777);
 
   atari_default_settings();
   psp_joy_default_settings();
