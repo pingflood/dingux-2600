@@ -1,0 +1,13 @@
+#!/bin/sh
+
+for d in cht disk joy kbd roms save scr set state txt; do
+	mkdir -p $HOME/.dingux-2600/$d
+	if [ -d $HOME/emus/dingux-2600/$d ]; then
+		[ `ls -A $HOME/emus/dingux-2600/$d` ] && cp -r $HOME/emus/dingux-2600/$d/* $HOME/.dingux-2600/$d/
+		rm -rf $HOME/emus/dingux-2600/$d
+	fi
+done
+
+[ -e $HOME/emus/dingux-2600/$d ] && mv $HOME/emus/dingux-2600/cheat.txt $HOME/.dingux-2600/
+
+exit 0

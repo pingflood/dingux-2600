@@ -529,7 +529,6 @@ psp_main_menu(void)
         // break;              
       }
     }
-
     else if ((new_pad == GP2X_CTRL_CIRCLE))
     {
 

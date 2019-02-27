@@ -173,17 +173,10 @@ typedef struct gp2xCtrlData SceCtrlData;
 #define GP2X_DOWNLEFT       87 //SDLK_KP1
 #define GP2X_DOWNRIGHT      89 //SDLK_KP3
 
-#if 0
-#define GP2X_A              38 //SDLK_a
-#define GP2X_B              56 //SDLK_b
-#define GP2X_X              53 //SDLK_x
-#define GP2X_Y              29 //SDLK_y
-# else
 #define GP2X_A              SDLK_x //38 //SDLK_a
 #define GP2X_B              SDLK_z //40 //SDLK_d
 #define GP2X_X              SDLK_s //53 //SDLK_x
 #define GP2X_Y              SDLK_a //25 //SDLK_w
-# endif
 #define GP2X_L              SDLK_d //46 //SDLK_l
 #define GP2X_R              SDLK_c //27 //SDLK_r
 #define GP2X_FIRE           SDLK_SPACE //65 //SDLK_SPACE
