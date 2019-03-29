@@ -12,11 +12,11 @@ CXX = $(CROSS_COMPILE)g++
 STRIP = $(CROSS_COMPILE)strip
 
 SYSROOT     := $(shell $(CC) --print-sysroot)
+SDL_CONFIG = $(SYSROOT)/usr/bin/sdl-config
 
 ATARI_VERSION=1.1.0
 
 TARGET = ./dingux-2600/dingux-2600.dge
-SDL_CONFIG = $(SYSROOT)/usr/bin/sdl-config
 OBJS = ./src/gp2x_psp.o \
 ./src/cpudingux.o \
 ./src/Atari.o  \
