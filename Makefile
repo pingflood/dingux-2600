@@ -1,7 +1,7 @@
 #
-# 2600 port on RS-97
+# Dingux 2600 for the RetroFW
 #
-# by pingflood; 2018
+# by pingflood; 2018/2019
 #
 
 CHAINPREFIX := /opt/mipsel-linux-uclibc
@@ -119,7 +119,7 @@ LIBS += -B$(SYSROOT)/lib
 LIBS += -lSDL_image -lpng
 LIBS += -lpthread  -ldl -lstdc++
 
-CFLAGS = $(DEFAULT_CFLAGS) $(MORE_CFLAGS) 
+CFLAGS = $(DEFAULT_CFLAGS) $(MORE_CFLAGS)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -133,22 +133,66 @@ $(TARGET): $(OBJS)
 
 ipk: $(TARGET)
 	@rm -rf /tmp/.dingux-2600-ipk/ && mkdir -p /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600 /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems
-	@cp -r dingux-2600/default.bin dingux-2600/dingux-2600.dge dingux-2600/dingux-2600.man.txt dingux-2600/dingux-2600.png dingux-2600/splash.png dingux-2600/graphics /tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600
-	@cp dingux-2600/dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators
-	@cp dingux-2600/atari2600.dingux-2600.lnk /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems
-	@sed "s/^Version:.*/Version: $$(date +%Y%m%d)/" dingux-2600/control > /tmp/.dingux-2600-ipk/control
-	@cp dingux-2600/conffiles dingux-2600/preinst /tmp/.dingux-2600-ipk/
+	@cp -r \
+	dingux-2600/default.bin \
+	dingux-2600/dingux-2600.dge \
+	dingux-2600/dingux-2600.man.txt \
+	dingux-2600/dingux-2600.png \
+	dingux-2600/splash.png \
+	dingux-2600/graphics \
+	/tmp/.dingux-2600-ipk/root/home/retrofw/emus/dingux-2600
+
+	@echo "title=Dingux 2600" > /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators/dingux-2600.lnk
+	@echo "description=Atari 2600 Emulator" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators/dingux-2600.lnk
+	@echo "exec=/home/retrofw/emus/dingux-2600/dingux-2600.dge" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators/dingux-2600.lnk
+	@echo "selectordir=/home/retrofw/roms/atari2600" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators/dingux-2600.lnk
+	@echo "selectorfilter=.zip,.bin,.a26" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators/dingux-2600.lnk
+	@echo "clock=600" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators/dingux-2600.lnk
+
+	@echo "title=Atari 2600" > /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems/atari2600.dingux-2600.lnk
+	@echo "description=Dingux 2600 Emulator" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems/atari2600.dingux-2600.lnk
+	@echo "exec=/home/retrofw/emus/dingux-2600/dingux-2600.dge" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems/atari2600.dingux-2600.lnk
+	@echo "selectordir=/home/retrofw/roms/atari2600" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems/atari2600.dingux-2600.lnk
+	@echo "selectorfilter=.zip,.bin,.a26" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems/atari2600.dingux-2600.lnk
+	@echo "clock=600" >> /tmp/.dingux-2600-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems/atari2600.dingux-2600.lnk
+
+	@echo "/home/retrofw/apps/gmenu2x/sections/emulators/dingux-2600.lnk" > /tmp/.dingux-2600-ipk/conffiles
+	@echo "/home/retrofw/apps/gmenu2x/sections/emulators.systems/atari2600.dingux-2600.lnk" >> /tmp/.dingux-2600-ipk/conffiles
+
+	@echo "Package: dingux-2600" > /tmp/.dingux-2600-ipk/control
+	@echo "Version: $$(date +%Y%m%d)" >> /tmp/.dingux-2600-ipk/control
+	@echo "Description: Dingux 2600 for the RetroFW" >> /tmp/.dingux-2600-ipk/control
+	@echo "Section: emulators" >> /tmp/.dingux-2600-ipk/control
+	@echo "Priority: optional" >> /tmp/.dingux-2600-ipk/control
+	@echo "Maintainer: pingflood" >> /tmp/.dingux-2600-ipk/control
+	@echo "Architecture: mipsel" >> /tmp/.dingux-2600-ipk/control
+	@echo "Homepage: https://github.com/pingflood/dingux-2600" >> /tmp/.dingux-2600-ipk/control
+	@echo "Depends:" >> /tmp/.dingux-2600-ipk/control
+	@echo "Source: https://github.com/pingflood/dingux-2600" >> /tmp/.dingux-2600-ipk/control
+
+	@cp dingux-2600/preinst /tmp/.dingux-2600-ipk/
 	@chmod +x /tmp/.dingux-2600-ipk/preinst
+
 	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/control.tar.gz -C /tmp/.dingux-2600-ipk/ control conffiles preinst
 	@tar --owner=0 --group=0 -czvf /tmp/.dingux-2600-ipk/data.tar.gz -C /tmp/.dingux-2600-ipk/root/ .
 	@echo 2.0 > /tmp/.dingux-2600-ipk/debian-binary
 	@ar r dingux-2600/dingux-2600.ipk /tmp/.dingux-2600-ipk/control.tar.gz /tmp/.dingux-2600-ipk/data.tar.gz /tmp/.dingux-2600-ipk/debian-binary
 
-# install: $(TARGET)
-# 	cp $< /media/dingux/local/emulators/dingux-2600/
+opk: $(TARGET)
+	@mksquashfs \
+	dingux-2600/default.retrofw.desktop \
+	dingux-2600/atari2600.retrofw.desktop \
+	dingux-2600/dingux-2600.dge \
+	dingux-2600/dingux-2600.man.txt \
+	dingux-2600/dingux-2600.png \
+	dingux-2600/splash.png \
+	dingux-2600/default.bin \
+	dingux-2600/graphics \
+	dingux-2600/dingux-2600.opk \
+	-all-root -noappend -no-exports -no-xattrs
+
+ctags:
+	ctags ./src/*[ch] ./src/emucore/*[chp] ./src/common/*[chp]
 
 clean:
 	rm -f $(OBJS) $(TARGET) ./dingux-2600/dingux-2600.ipk
-
-ctags: 
-	ctags ./src/*[ch] ./src/emucore/*[chp] ./src/common/*[chp]

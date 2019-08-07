@@ -1,8 +1,7 @@
-/src/*.o
-/src/emucore/*.o
-/src/common/*.o
-/src/psp/*.o
-/dingux-2600/dingux-2600.dge
+*.o
+*.dge
+*.elf
 /dingux-2600/roms/*
 /dingux-2600/save/*
 *.ipk
+*.opk

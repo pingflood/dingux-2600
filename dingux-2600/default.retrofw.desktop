@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Dingux 2600
+Comment=Atari 2600 Emulator
+Exec=dingux-2600.dge %f
+Icon=dingux-2600
+Categories=emulators;
+X-OD-Manual=dingux-2600.man.txt
+X-OD-Filter=.zip,.bin,.a26
+Terminal=false
+StartupNotify=true
